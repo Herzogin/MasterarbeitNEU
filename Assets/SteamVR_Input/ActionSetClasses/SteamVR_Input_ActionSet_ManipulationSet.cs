@@ -72,5 +72,13 @@ namespace Valve.VR
                 return SteamVR_Actions.manipulationSet_change_position;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean white
+        {
+            get
+            {
+                return SteamVR_Actions.manipulationSet_white;
+            }
+        }
     }
 }

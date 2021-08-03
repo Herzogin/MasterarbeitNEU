@@ -109,6 +109,10 @@
     {
       "name": "/actions/ManipulationSet/in/change_position",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/ManipulationSet/in/white",
+      "type": "boolean"
     }
   ],
   "action_sets": [

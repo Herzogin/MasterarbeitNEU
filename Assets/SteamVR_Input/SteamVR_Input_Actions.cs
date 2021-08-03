@@ -69,6 +69,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_manipulationSet_change_position;
         
+        private static SteamVR_Action_Boolean p_manipulationSet_white;
+        
         public static SteamVR_Action_Boolean default_InteractUI
         {
             get
@@ -277,6 +279,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean manipulationSet_white
+        {
+            get
+            {
+                return SteamVR_Actions.p_manipulationSet_white.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
@@ -305,7 +315,8 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_blue,
                     SteamVR_Actions.manipulationSet_green,
                     SteamVR_Actions.manipulationSet_yellow,
-                    SteamVR_Actions.manipulationSet_change_position};
+                    SteamVR_Actions.manipulationSet_change_position,
+                    SteamVR_Actions.manipulationSet_white};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -331,7 +342,8 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_blue,
                     SteamVR_Actions.manipulationSet_green,
                     SteamVR_Actions.manipulationSet_yellow,
-                    SteamVR_Actions.manipulationSet_change_position};
+                    SteamVR_Actions.manipulationSet_change_position,
+                    SteamVR_Actions.manipulationSet_white};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
@@ -355,7 +367,8 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_blue,
                     SteamVR_Actions.manipulationSet_green,
                     SteamVR_Actions.manipulationSet_yellow,
-                    SteamVR_Actions.manipulationSet_change_position};
+                    SteamVR_Actions.manipulationSet_change_position,
+                    SteamVR_Actions.manipulationSet_white};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle};
@@ -388,7 +401,8 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_blue,
                     SteamVR_Actions.manipulationSet_green,
                     SteamVR_Actions.manipulationSet_yellow,
-                    SteamVR_Actions.manipulationSet_change_position};
+                    SteamVR_Actions.manipulationSet_change_position,
+                    SteamVR_Actions.manipulationSet_white};
         }
         
         private static void PreInitActions()
@@ -419,6 +433,7 @@ namespace Valve.VR
             SteamVR_Actions.p_manipulationSet_green = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/ManipulationSet/in/green")));
             SteamVR_Actions.p_manipulationSet_yellow = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/ManipulationSet/in/yellow")));
             SteamVR_Actions.p_manipulationSet_change_position = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/ManipulationSet/in/change_position")));
+            SteamVR_Actions.p_manipulationSet_white = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/ManipulationSet/in/white")));
         }
     }
 }
