@@ -3,10 +3,12 @@ using UnityEngine;
 using Valve.VR.Extras;
 using UnityEngine.Windows.Speech;
 using System.Linq;
+using UnityEngine.UI;
 
 public class VoiceAndLaserpointer : MonoBehaviour
 {
     public ObjectManipulation objectManipulation;
+    public Text voiceInput;
     public SteamVR_LaserPointer laserPointer;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
@@ -81,6 +83,7 @@ public class VoiceAndLaserpointer : MonoBehaviour
 
     private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
+        voiceInput.text = args.text;
         System.Action keywordAction;
         if (keywords.TryGetValue(args.text, out keywordAction))
         {
