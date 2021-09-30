@@ -113,6 +113,10 @@
     {
       "name": "/actions/ManipulationSet/in/white",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/TidyUpSet/in/change_position",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -134,6 +138,10 @@
     },
     {
       "name": "/actions/ManipulationSet",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/TidyUpSet",
       "usage": "single"
     }
   ],

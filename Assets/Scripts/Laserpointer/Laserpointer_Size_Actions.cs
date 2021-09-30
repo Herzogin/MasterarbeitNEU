@@ -4,6 +4,7 @@ using UnityEngine;
 using Valve.VR;
 using Valve.VR.Extras;
 
+//Quelle: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
 
 
 public class Laserpointer_Size_Actions : MonoBehaviour
@@ -20,6 +21,7 @@ public class Laserpointer_Size_Actions : MonoBehaviour
     {
         Debug.Log("Size action loaded");
         laserPointer.PointerIn += PointerInside;
+        laserPointer.PointerOut += PointerOutside;
     }
 
     // Update is called once per frame
@@ -31,10 +33,10 @@ public class Laserpointer_Size_Actions : MonoBehaviour
 
     public void changeSize()
     {
-        Debug.Log("inside change size");
+        //Debug.Log("inside change size");
         Vector2 touchPadValue = touchPadAction.GetAxis(hand);
-        print("touchpad value: " + touchPadValue.x);
-        if (touchPadValue != Vector2.zero)
+        //print("touchpad value: " + touchPadValue.x);
+        if (touchPadValue != Vector2.zero & selectedGameObject != null)
         {
             Vector3 newScale = selectedGameObject.transform.localScale;
             newScale = new Vector3(touchPadValue.x + 1, touchPadValue.x + 1, touchPadValue.x + 1);
@@ -56,5 +58,14 @@ public class Laserpointer_Size_Actions : MonoBehaviour
             Debug.Log(name + " was clicked, but has no tag `manipulable`");
         }
 
+    }
+
+    public void PointerOutside(object sender, PointerEventArgs e)
+    {
+        string name = e.target.name;
+        if (selectedGameObject != null)
+        {
+            selectedGameObject = null;
+        }
     }
 }

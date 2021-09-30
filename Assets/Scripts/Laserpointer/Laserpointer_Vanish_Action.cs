@@ -4,6 +4,9 @@ using UnityEngine;
 using Valve.VR;
 using Valve.VR.Extras;
 
+//Quelle: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
+
+
 public class Laserpointer_Vanish_Action : MonoBehaviour
 {
     GameObject selectedGameObject;
@@ -45,6 +48,5 @@ public class Laserpointer_Vanish_Action : MonoBehaviour
         {
             Debug.Log(name + " was clicked, but has no tag `manipulable`");
         }
-
     }
 }

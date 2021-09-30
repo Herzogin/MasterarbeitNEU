@@ -4,6 +4,9 @@ using UnityEngine;
 using Valve.VR;
 using Valve.VR.Extras;
 
+//Quelle: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
+
+
 public class Laserpointer_Color_Actions : MonoBehaviour
 {
     public SteamVR_Action_Boolean red;
@@ -19,6 +22,7 @@ public class Laserpointer_Color_Actions : MonoBehaviour
     void Awake()
     {
         laserPointer.PointerIn += PointerInside;
+        //laserPointer.PointerOut += PointerOutside;
     }
 
     // Start is called before the first frame update
@@ -35,9 +39,20 @@ public class Laserpointer_Color_Actions : MonoBehaviour
     {
         string name = e.target.name;
         Debug.Log(name + " was entered");
-        selectedGameObject = e.target.gameObject;
-
+        if (e.target.tag == "manipulable")// & selectedGameObject != null)
+        {
+            selectedGameObject = e.target.gameObject;
+        }
     }
+
+    //public void PointerOutside(object sender, PointerEventArgs e)
+    //{
+    //    string name = e.target.name;
+    //    if (selectedGameObject != null)
+    //    {
+    //        selectedGameObject = null;
+    //    }
+    //}
 
     public void DPadNorth(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
