@@ -1,15 +1,12 @@
 ﻿using Valve.VR.Extras;
 using System.Collections;
 using UnityEngine;
+using Valve.VR;
 
 public class ObjectManipulation : MonoBehaviour
 {
-    public void colorMe(PointerEventArgs e, Color color)
-    {
-        e.target.gameObject.GetComponent<Renderer>().material.color = color;
-    }
 
-    public void colorVoice(GameObject gameObject, Color color)
+    public void PaintObject(GameObject gameObject, Color color)
     {
         gameObject.GetComponent<Renderer>().material.color = color;
     }
@@ -28,15 +25,15 @@ public class ObjectManipulation : MonoBehaviour
     //    }
     //}
 
-    public void bigger(PointerEventArgs e)
-    {
-        Debug.Log("größer");
-        Vector3 currentScale = e.target.transform.localScale;
-        if (currentScale.x < 5)
-        {
-            e.target.transform.localScale = currentScale * 1.5f;
-        }
-    }
+    //public void bigger(PointerEventArgs e)
+    //{
+    //    Debug.Log("größer");
+    //    Vector3 currentScale = e.target.transform.localScale;
+    //    if (currentScale.x < 5)
+    //    {
+    //        e.target.transform.localScale = currentScale * 1.5f;
+    //    }
+    //}
 
     public void bigger(GameObject gameObject)
     {
@@ -55,6 +52,15 @@ public class ObjectManipulation : MonoBehaviour
         if (currentScale.x > 0.2)
         {
             gameObject.transform.localScale = currentScale / 1.5f;
+        }
+    }
+
+    public void ChangeSize(SteamVR_Action_Vector2 touchPadAction, SteamVR_Input_Sources hand, GameObject selectedGameObject)
+    {
+        Vector2 touchPadValue = touchPadAction.GetAxis(hand);
+        if (touchPadValue != Vector2.zero & selectedGameObject != null)
+        {
+            selectedGameObject.transform.localScale = new Vector3(touchPadValue.x + 1, touchPadValue.x + 1, touchPadValue.x + 1);
         }
     }
 
@@ -99,10 +105,7 @@ public class ObjectManipulation : MonoBehaviour
 
 
 
-    //public void moveRight(GameObject gameObject, float speed)
-    //{
-    //    gameObject.transform.position += Time.deltaTime * speed * Vector3.right;
-    //}
+  
 
     public void rotateRight(GameObject gameObject, float speed)
     {
@@ -110,34 +113,54 @@ public class ObjectManipulation : MonoBehaviour
         gameObject.transform.Rotate(Vector3.down * 30);
     }
 
-    public void delete(GameObject gameObject)
+    public void DeleteObject(GameObject gameObject)
     {
-        gameObject.SetActive(false);
+        gameObject.GetComponent<MeshRenderer>().enabled = !gameObject.GetComponent<MeshRenderer>().enabled;
+        //gameObject.SetActive(false);
     }
 
-    public IEnumerator vanish(PointerEventArgs e)
+    public void AttachObject(GameObject gameObject, GameObject Controller)
     {
-        Vector3 newVector = new Vector3(0.01f, 0.01f, 0.01f);
-        float xsize = e.target.localScale.x;
-        while (xsize > 0.02f)
+        if (gameObject.GetComponent<Rigidbody>() != null)
         {
-            xsize = e.target.localScale.x;
-            e.target.localScale = e.target.localScale - newVector;
-            yield return new WaitForSeconds(0.0001f);
+            gameObject.GetComponent<Rigidbody>().useGravity = false; //https://answers.unity.com/questions/767287/chow-to-disable-gravity-from-script.html
         }
-        Destroy(e.target.gameObject);
+        gameObject.transform.parent = Controller.transform;
     }
 
-    public IEnumerator vanish(GameObject gameObject)
+    public void DetachObject(GameObject gameObject)
     {
-        Vector3 newVector = new Vector3(0.01f, 0.01f, 0.01f);
-        float xsize = gameObject.transform.localScale.x;
-        while (xsize > 0.02f)
+        gameObject.transform.SetParent(null);
+        if (gameObject.GetComponent<Rigidbody>() != null)
         {
-            xsize = gameObject.transform.localScale.x;
-            gameObject.transform.localScale = gameObject.transform.localScale - newVector;
-            yield return new WaitForSeconds(0.0001f);
+            gameObject.GetComponent<Rigidbody>().useGravity = true; //https://answers.unity.com/questions/767287/chow-to-disable-gravity-from-script.html
         }
-        Destroy(gameObject.transform.gameObject);
     }
+
+
+    //public IEnumerator vanish(PointerEventArgs e)
+    //{
+    //    Vector3 newVector = new Vector3(0.01f, 0.01f, 0.01f);
+    //    float xsize = e.target.localScale.x;
+    //    while (xsize > 0.02f)
+    //    {
+    //        xsize = e.target.localScale.x;
+    //        e.target.localScale = e.target.localScale - newVector;
+    //        yield return new WaitForSeconds(0.0001f);
+    //    }
+    //    Destroy(e.target.gameObject);
+    //}
+
+    //public IEnumerator vanish(GameObject gameObject)
+    //{
+    //    Vector3 newVector = new Vector3(0.01f, 0.01f, 0.01f);
+    //    float xsize = gameObject.transform.localScale.x;
+    //    while (xsize > 0.02f)
+    //    {
+    //        xsize = gameObject.transform.localScale.x;
+    //        gameObject.transform.localScale = gameObject.transform.localScale - newVector;
+    //        yield return new WaitForSeconds(0.0001f);
+    //    }
+    //    Destroy(gameObject.transform.gameObject);
+    //}
 }

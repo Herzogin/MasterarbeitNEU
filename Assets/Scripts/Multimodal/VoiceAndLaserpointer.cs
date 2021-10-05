@@ -27,35 +27,35 @@ public class VoiceAndLaserpointer : MonoBehaviour
     void Start()
     {
         targetGameObject = null;
-        keywords.Add("blue", () =>
+        keywords.Add("blue", (System.Action)(() =>
         {
             Debug.Log("blue");
-            objectManipulation.colorVoice(targetGameObject, Color.blue);
-        });
+            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.blue);
+        }));
 
-        keywords.Add("green", () =>
+        keywords.Add("green", (System.Action)(() =>
         {
             Debug.Log("green");
-            objectManipulation.colorVoice(targetGameObject, Color.green);
-        });
+            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.green);
+        }));
 
-        keywords.Add("yellow", () =>
+        keywords.Add("yellow", (System.Action)(() =>
         {
             Debug.Log("yellow");
-            objectManipulation.colorVoice(targetGameObject, Color.yellow);
-        });
+            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.yellow);
+        }));
 
-        keywords.Add("red", () =>
+        keywords.Add("red", (System.Action)(() =>
         {
             Debug.Log("red");
-            objectManipulation.colorVoice(targetGameObject, Color.red);
-        });
+            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.red);
+        }));
 
-        keywords.Add("magenta", () =>
+        keywords.Add("magenta", (System.Action)(() =>
         {
             Debug.Log("magenta");
-            objectManipulation.colorVoice(targetGameObject, Color.magenta);
-        });
+            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.magenta);
+        }));
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
 

@@ -45,13 +45,13 @@ public class VoiceCommands : MonoBehaviour
         });
 
         //change color of GameObject:
-        keywords.Add("rot", () => { objectManipulation.colorVoice(game_object, Color.red); });
+        keywords.Add("rot", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.red); }));
 
-        keywords.Add("gelb", () => { objectManipulation.colorVoice(game_object, Color.yellow); });
+        keywords.Add("gelb", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.yellow); }));
 
-        keywords.Add("blau", () => { objectManipulation.colorVoice(game_object, Color.blue); });
+        keywords.Add("blau", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.blue); }));
 
-        keywords.Add("grün", () => { objectManipulation.colorVoice(game_object, Color.green); });
+        keywords.Add("grün", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.green); }));
 
         //change size of GameObject:
         keywords.Add("größer", () => { objectManipulation.bigger(game_object); });
@@ -62,7 +62,7 @@ public class VoiceCommands : MonoBehaviour
         keywords.Add("drehen", () => { objectManipulation.rotateRight(game_object, 20f); });
 
         //delete GameObject:
-        keywords.Add("löschen", () => { objectManipulation.delete(game_object); });
+        keywords.Add("löschen", () => { objectManipulation.DeleteObject(game_object); });
 
         //move GameObject:
         keywords.Add("rechts", () => { objectManipulation.moveRight(game_object); });

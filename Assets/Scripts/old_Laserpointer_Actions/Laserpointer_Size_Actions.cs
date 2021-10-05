@@ -30,17 +30,12 @@ public class Laserpointer_Size_Actions : MonoBehaviour
         changeSize();
     }
 
-
     public void changeSize()
     {
-        //Debug.Log("inside change size");
         Vector2 touchPadValue = touchPadAction.GetAxis(hand);
-        //print("touchpad value: " + touchPadValue.x);
         if (touchPadValue != Vector2.zero & selectedGameObject != null)
         {
-            Vector3 newScale = selectedGameObject.transform.localScale;
-            newScale = new Vector3(touchPadValue.x + 1, touchPadValue.x + 1, touchPadValue.x + 1);
-            selectedGameObject.transform.localScale = newScale;
+            selectedGameObject.transform.localScale = new Vector3(touchPadValue.x + 1, touchPadValue.x + 1, touchPadValue.x + 1);
         }
     }
 
