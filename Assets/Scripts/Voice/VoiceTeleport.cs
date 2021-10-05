@@ -6,7 +6,7 @@ using System.Linq;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
 
-public class VoiceNavigation : MonoBehaviour
+public class VoiceTeleport : MonoBehaviour
 {
     public Rigidbody hmd;
     GameObject player;
@@ -31,7 +31,7 @@ public class VoiceNavigation : MonoBehaviour
 
         keywords.Add("rechts", () => { player.transform.position += new Vector3(3, 0, 0); });
 
-        keywords.Add("Schneemann", () => 
+        keywords.Add("Schneemann", () =>
         {
             goTo("Schneemann");
         });

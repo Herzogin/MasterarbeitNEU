@@ -73,6 +73,12 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_tidyUpSet_change_position;
         
+        private static SteamVR_Action_Vector2 p_navigationSet_walkDirection;
+        
+        private static SteamVR_Action_Boolean p_navigationSet_startWalking;
+        
+        private static SteamVR_Action_Boolean p_navigationSet_speedBooster;
+        
         public static SteamVR_Action_Boolean default_InteractUI
         {
             get
@@ -297,6 +303,30 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Vector2 navigationSet_walkDirection
+        {
+            get
+            {
+                return SteamVR_Actions.p_navigationSet_walkDirection.GetCopy<SteamVR_Action_Vector2>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean navigationSet_startWalking
+        {
+            get
+            {
+                return SteamVR_Actions.p_navigationSet_startWalking.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean navigationSet_speedBooster
+        {
+            get
+            {
+                return SteamVR_Actions.p_navigationSet_speedBooster.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
@@ -327,7 +357,10 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_yellow,
                     SteamVR_Actions.manipulationSet_change_position,
                     SteamVR_Actions.manipulationSet_white,
-                    SteamVR_Actions.tidyUpSet_change_position};
+                    SteamVR_Actions.tidyUpSet_change_position,
+                    SteamVR_Actions.navigationSet_walkDirection,
+                    SteamVR_Actions.navigationSet_startWalking,
+                    SteamVR_Actions.navigationSet_speedBooster};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -355,7 +388,10 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_yellow,
                     SteamVR_Actions.manipulationSet_change_position,
                     SteamVR_Actions.manipulationSet_white,
-                    SteamVR_Actions.tidyUpSet_change_position};
+                    SteamVR_Actions.tidyUpSet_change_position,
+                    SteamVR_Actions.navigationSet_walkDirection,
+                    SteamVR_Actions.navigationSet_startWalking,
+                    SteamVR_Actions.navigationSet_speedBooster};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
@@ -381,14 +417,17 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_yellow,
                     SteamVR_Actions.manipulationSet_change_position,
                     SteamVR_Actions.manipulationSet_white,
-                    SteamVR_Actions.tidyUpSet_change_position};
+                    SteamVR_Actions.tidyUpSet_change_position,
+                    SteamVR_Actions.navigationSet_startWalking,
+                    SteamVR_Actions.navigationSet_speedBooster};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle};
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[] {
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.buggy_Steering,
-                    SteamVR_Actions.manipulationSet_change_size};
+                    SteamVR_Actions.manipulationSet_change_size,
+                    SteamVR_Actions.navigationSet_walkDirection};
             Valve.VR.SteamVR_Input.actionsVector3 = new Valve.VR.SteamVR_Action_Vector3[0];
             Valve.VR.SteamVR_Input.actionsSkeleton = new Valve.VR.SteamVR_Action_Skeleton[] {
                     SteamVR_Actions.default_SkeletonLeftHand,
@@ -416,7 +455,10 @@ namespace Valve.VR
                     SteamVR_Actions.manipulationSet_yellow,
                     SteamVR_Actions.manipulationSet_change_position,
                     SteamVR_Actions.manipulationSet_white,
-                    SteamVR_Actions.tidyUpSet_change_position};
+                    SteamVR_Actions.tidyUpSet_change_position,
+                    SteamVR_Actions.navigationSet_walkDirection,
+                    SteamVR_Actions.navigationSet_startWalking,
+                    SteamVR_Actions.navigationSet_speedBooster};
         }
         
         private static void PreInitActions()
@@ -449,6 +491,9 @@ namespace Valve.VR
             SteamVR_Actions.p_manipulationSet_change_position = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/ManipulationSet/in/change_position")));
             SteamVR_Actions.p_manipulationSet_white = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/ManipulationSet/in/white")));
             SteamVR_Actions.p_tidyUpSet_change_position = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/TidyUpSet/in/change_position")));
+            SteamVR_Actions.p_navigationSet_walkDirection = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/NavigationSet/in/walkDirection")));
+            SteamVR_Actions.p_navigationSet_startWalking = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/NavigationSet/in/startWalking")));
+            SteamVR_Actions.p_navigationSet_speedBooster = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/NavigationSet/in/speedBooster")));
         }
     }
 }

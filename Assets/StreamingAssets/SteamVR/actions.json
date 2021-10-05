@@ -117,6 +117,18 @@
     {
       "name": "/actions/TidyUpSet/in/change_position",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/NavigationSet/in/walkDirection",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/NavigationSet/in/startWalking",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/NavigationSet/in/speedBooster",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -142,6 +154,10 @@
     },
     {
       "name": "/actions/TidyUpSet",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/NavigationSet",
       "usage": "single"
     }
   ],
