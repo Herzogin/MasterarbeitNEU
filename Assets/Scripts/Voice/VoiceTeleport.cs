@@ -12,8 +12,8 @@ public class VoiceTeleport : MonoBehaviour
     GameObject player;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
-    bool stopped;
-    float pause = 1.0f;
+    //bool stopped;
+    //float pause = 1.0f;
 
 
     // Start is called before the first frame update
@@ -66,25 +66,25 @@ public class VoiceTeleport : MonoBehaviour
         player.transform.position += target;
     }
 
-    private IEnumerator GoToTarget(Vector3 target)
-    {
-        float speed = 2;
-        float timer = 0.0f;
-        Vector3 origin = player.transform.position;
+    //private IEnumerator GoToTarget(Vector3 target)
+    //{
+    //    float speed = 2;
+    //    float timer = 0.0f;
+    //    Vector3 origin = player.transform.position;
 
-        while (timer < speed)
-        {
-            timer += Time.deltaTime;
-            float t = timer / speed;
-            t = t * t * t * (t * (6f * t - 15f) + 10f);
-            transform.position = Vector3.Lerp(origin, target, t);
+    //    while (timer < speed)
+    //    {
+    //        timer += Time.deltaTime;
+    //        float t = timer / speed;
+    //        t = t * t * t * (t * (6f * t - 15f) + 10f);
+    //        transform.position = Vector3.Lerp(origin, target, t);
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        yield return new WaitForSeconds(pause);
-        stopped = false;
-    }
+    //    yield return new WaitForSeconds(pause);
+    //    stopped = false;
+    //}
 
     private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
