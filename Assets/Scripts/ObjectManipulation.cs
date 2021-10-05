@@ -107,7 +107,7 @@ public class ObjectManipulation : MonoBehaviour
 
   
 
-    public void rotateRight(GameObject gameObject, float speed)
+    public void rotateRight(GameObject gameObject) //, float speed)
     {
         //gameObject.transform.Rotate(Time.deltaTime * speed * Vector3.down);
         gameObject.transform.Rotate(Vector3.down * 30);

@@ -7,15 +7,10 @@ public class VoiceCommands : MonoBehaviour
 {
     GameObject game_object;
     public ObjectManipulation objectManipulation;
-    //public SelectionHighlight selectionHighlight;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
-    //private void Update()
-    //{
-    //    selectionHighlight.Select(game_object);
-    //}
-
+  
     void Start()
     {
         game_object = GameObject.Find("HelperObject");
@@ -59,7 +54,7 @@ public class VoiceCommands : MonoBehaviour
         keywords.Add("kleiner", () => { objectManipulation.smaller(game_object); });
 
         //rotate GameObject:
-        keywords.Add("drehen", () => { objectManipulation.rotateRight(game_object, 20f); });
+        keywords.Add("drehen", () => { objectManipulation.rotateRight(game_object); }); //, 20f); });
 
         //delete GameObject:
         keywords.Add("löschen", () => { objectManipulation.DeleteObject(game_object); });

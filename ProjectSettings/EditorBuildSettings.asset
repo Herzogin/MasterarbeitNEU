@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SystemControlScene.unity
+    guid: 5dd6cc8e3a829784c8fd0d8cc75da198
+  - enabled: 1
+    path: Assets/Scenes/ControllerTidyUpScene.unity
+    guid: f561041ba764a5d4a911dd2540f9bd6c
+  - enabled: 1
+    path: Assets/Scenes/VoiceTidyUpScene.unity
+    guid: f194dbc219bf66540b9d66bbf9fbbedf
   m_configObjects: {}
