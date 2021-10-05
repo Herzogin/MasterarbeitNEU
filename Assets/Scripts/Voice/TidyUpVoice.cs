@@ -15,45 +15,43 @@ public class TidyUpVoice : MonoBehaviour
         game_object = GameObject.Find("Plane");
 
         //select Parent-GameObject:
-        keywords.Add("Kugeln", () => { game_object = GameObject.Find("Spheres"); });
+        keywords.Add("Kugeln", () => {
+            game_object = GameObject.Find("Spheres");
+            LiftUp(ChildrenToList(game_object));
+        });
 
-        keywords.Add("Würfel", () => { game_object = GameObject.Find("Cubes"); });
+        keywords.Add("Würfel", () => {
+            game_object = GameObject.Find("Cubes");
+            LiftUp(ChildrenToList(game_object));
+        });
 
-        keywords.Add("Kapseln", () => { game_object = GameObject.Find("Capsules"); });
+        keywords.Add("Kapseln", () => {
+            game_object = GameObject.Find("Capsules");
+            LiftUp(ChildrenToList(game_object));
+        });
 
-        keywords.Add("Zylinder", () => { game_object = GameObject.Find("Cylinder"); });
+        keywords.Add("Zylinder", () => {
+            game_object = GameObject.Find("Cylinder");
+            LiftUp(ChildrenToList(game_object));
+        });
 
         //define location
+
         keywords.Add("auf blau", () => {
-            int children = game_object.transform.childCount;
-            List<GameObject> ItemsInGroup = new List<GameObject>();
-            for (int i = 0; i < children; ++i)
-                ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-            tidyUp.PlaceInBlue(ItemsInGroup);
+            tidyUp.PlaceInBlue(ChildrenToList(game_object));
         });
 
         keywords.Add("auf rot", () => {
-            int children = game_object.transform.childCount;
-            List<GameObject> ItemsInGroup = new List<GameObject>();
-            for (int i = 0; i < children; ++i)
-                ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-            tidyUp.PlaceInRed(ItemsInGroup);
+            
+            tidyUp.PlaceInRed(ChildrenToList(game_object));
         });
 
         keywords.Add("auf gelb", () => {
-            int children = game_object.transform.childCount;
-            List<GameObject> ItemsInGroup = new List<GameObject>();
-            for (int i = 0; i < children; ++i)
-                ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-            tidyUp.PlaceInYellow(ItemsInGroup);
+            tidyUp.PlaceInYellow(ChildrenToList(game_object));
         });
 
         keywords.Add("auf grün", () => {
-            int children = game_object.transform.childCount;
-            List<GameObject> ItemsInGroup = new List<GameObject>();
-            for (int i = 0; i < children; ++i)
-                ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-            tidyUp.PlaceInGreen(ItemsInGroup);
+            tidyUp.PlaceInGreen(ChildrenToList(game_object));
         });
 
 
@@ -72,6 +70,25 @@ public class TidyUpVoice : MonoBehaviour
         if (keywords.TryGetValue(args.text, out keywordAction))
         {
             keywordAction.Invoke();
+        }
+    }
+
+    List<GameObject> ChildrenToList(GameObject selectedGroup)
+    {
+        int children = game_object.transform.childCount;
+        List<GameObject> ItemsInGroup = new List<GameObject>();
+        for (int i = 0; i < children; ++i)
+        {
+            ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
+        }
+        return ItemsInGroup;
+    }
+
+    void LiftUp(List<GameObject> itemList)
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            itemList[i].transform.position += Vector3.up;
         }
     }
 }

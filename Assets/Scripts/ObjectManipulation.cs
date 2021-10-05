@@ -11,44 +11,52 @@ public class ObjectManipulation : MonoBehaviour
 
     public void colorVoice(GameObject gameObject, Color color)
     {
-        if (gameObject.name == "snowman")
-        {
-            gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = color;
-            gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = color;
-            gameObject.transform.GetChild(2).gameObject.GetComponent<Renderer>().material.color = color;
-        }
-        else
-        {
-            gameObject.GetComponent<Renderer>().material.color = color;
-        }
-
-
+        gameObject.GetComponent<Renderer>().material.color = color;
     }
+
+    //public void colorVoice(GameObject gameObject, Color color)
+    //{
+    //    if (gameObject.name == "snowman")
+    //    {
+    //        gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = color;
+    //        gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = color;
+    //        gameObject.transform.GetChild(2).gameObject.GetComponent<Renderer>().material.color = color;
+    //    }
+    //    else
+    //    {
+    //        gameObject.GetComponent<Renderer>().material.color = color;
+    //    }
+    //}
 
     public void bigger(PointerEventArgs e)
     {
         Debug.Log("größer");
-        Vector3 newScale = e.target.transform.localScale;
-        newScale *= 1.5f;
-        e.target.transform.localScale = newScale;
+        Vector3 currentScale = e.target.transform.localScale;
+        if (currentScale.x < 5)
+        {
+            e.target.transform.localScale = currentScale * 1.5f;
+        }
     }
 
     public void bigger(GameObject gameObject)
     {
         Debug.Log("bigger");
-        Vector3 newScale = gameObject.transform.localScale;
-        newScale *= 1.5f;
-        gameObject.transform.localScale = newScale;
+        Vector3 currentScale = gameObject.transform.localScale;
+        if (currentScale.x < 5)
+        {
+            gameObject.transform.localScale = currentScale * 1.5f;
+        }
     }
 
     public void smaller(GameObject gameObject)
     {
         Debug.Log("smaller");
-        Vector3 newScale = gameObject.transform.localScale;
-        newScale /= 1.5f;
-        gameObject.transform.localScale = newScale;
+        Vector3 currentScale = gameObject.transform.localScale;
+        if (currentScale.x > 0.2)
+        {
+            gameObject.transform.localScale = currentScale / 1.5f;
+        }
     }
-
 
     public void moveRight(GameObject gameObject)
     {
