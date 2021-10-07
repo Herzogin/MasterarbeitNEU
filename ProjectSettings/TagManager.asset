@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - manipulable
+  - animal
+  - 3Dbuttons
   layers:
   - Default
   - TransparentFX
