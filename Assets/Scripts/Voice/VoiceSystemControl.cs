@@ -16,8 +16,8 @@ public class VoiceSystemControl : MonoBehaviour
 
     void Start()
     {
-        sceneSwitch = GameObject.FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
-        skyboxScript = GameObject.FindObjectOfType(typeof(SkyboxController)) as SkyboxController;
+        sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+        skyboxScript = FindObjectOfType(typeof(SkyboxController)) as SkyboxController;
 
         
 

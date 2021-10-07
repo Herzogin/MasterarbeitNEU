@@ -31,6 +31,8 @@ namespace Valve.VR
         
         private static SteamVR_Input_ActionSet_NavigationSet p_NavigationSet;
         
+        private static SteamVR_Input_ActionSet_SystemControlSet p_SystemControlSet;
+        
         public static SteamVR_Input_ActionSet_default _default
         {
             get
@@ -87,6 +89,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Input_ActionSet_SystemControlSet SystemControlSet
+        {
+            get
+            {
+                return SteamVR_Actions.p_SystemControlSet.GetCopy<SteamVR_Input_ActionSet_SystemControlSet>();
+            }
+        }
+        
         private static void StartPreInitActionSets()
         {
             SteamVR_Actions.p__default = ((SteamVR_Input_ActionSet_default)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_default>("/actions/default")));
@@ -96,6 +106,7 @@ namespace Valve.VR
             SteamVR_Actions.p_ManipulationSet = ((SteamVR_Input_ActionSet_ManipulationSet)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_ManipulationSet>("/actions/ManipulationSet")));
             SteamVR_Actions.p_TidyUpSet = ((SteamVR_Input_ActionSet_TidyUpSet)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_TidyUpSet>("/actions/TidyUpSet")));
             SteamVR_Actions.p_NavigationSet = ((SteamVR_Input_ActionSet_NavigationSet)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_NavigationSet>("/actions/NavigationSet")));
+            SteamVR_Actions.p_SystemControlSet = ((SteamVR_Input_ActionSet_SystemControlSet)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_SystemControlSet>("/actions/SystemControlSet")));
             Valve.VR.SteamVR_Input.actionSets = new Valve.VR.SteamVR_ActionSet[] {
                     SteamVR_Actions._default,
                     SteamVR_Actions.platformer,
@@ -103,7 +114,8 @@ namespace Valve.VR
                     SteamVR_Actions.mixedreality,
                     SteamVR_Actions.ManipulationSet,
                     SteamVR_Actions.TidyUpSet,
-                    SteamVR_Actions.NavigationSet};
+                    SteamVR_Actions.NavigationSet,
+                    SteamVR_Actions.SystemControlSet};
         }
     }
 }

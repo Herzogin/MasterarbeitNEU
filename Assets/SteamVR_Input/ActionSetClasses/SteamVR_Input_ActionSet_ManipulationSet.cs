@@ -80,5 +80,13 @@ namespace Valve.VR
                 return SteamVR_Actions.manipulationSet_white;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean sceneSwitch
+        {
+            get
+            {
+                return SteamVR_Actions.manipulationSet_sceneSwitch;
+            }
+        }
     }
 }

@@ -40,5 +40,21 @@ namespace Valve.VR
                 return SteamVR_Actions.navigationSet_speedBooster;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean switchScene
+        {
+            get
+            {
+                return SteamVR_Actions.navigationSet_switchScene;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean InteractUI
+        {
+            get
+            {
+                return SteamVR_Actions.navigationSet_InteractUI;
+            }
+        }
     }
 }

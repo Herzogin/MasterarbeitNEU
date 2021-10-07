@@ -14,22 +14,14 @@ namespace Valve.VR
     using UnityEngine;
     
     
-    public class SteamVR_Input_ActionSet_TidyUpSet : Valve.VR.SteamVR_ActionSet
+    public class SteamVR_Input_ActionSet_SystemControlSet : Valve.VR.SteamVR_ActionSet
     {
         
-        public virtual SteamVR_Action_Boolean change_position
+        public virtual SteamVR_Action_Boolean backToFirstScene
         {
             get
             {
-                return SteamVR_Actions.tidyUpSet_change_position;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean switchScene
-        {
-            get
-            {
-                return SteamVR_Actions.tidyUpSet_switchScene;
+                return SteamVR_Actions.systemControlSet_backToFirstScene;
             }
         }
     }

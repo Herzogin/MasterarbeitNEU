@@ -9,18 +9,22 @@ public class VoiceWalking : MonoBehaviour
     GameObject game_object;
     public GameObject CameraRig;
     Walk walk;
+    SceneSwitch sceneSwitch;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
-    private void Awake()
-    {
-        walk = CameraRig.GetComponent<Walk>();
-    }
-
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        walk = CameraRig.GetComponent<Walk>();
+        sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+        // go back to first scene:
+        keywords.Add("zurück", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene"); });
+
+        keywords.Add("Anfang", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene"); });
+
 
         keywords.Add("los", () => {
             walk.SetMovementSpeed(2);
@@ -36,7 +40,6 @@ public class VoiceWalking : MonoBehaviour
             {
                 walk.SetMovementSpeed(lastSpeed + 3);
             }
-
         });
 
         keywords.Add("langsamer", () => {

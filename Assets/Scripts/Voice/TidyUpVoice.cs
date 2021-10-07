@@ -6,13 +6,21 @@ using System.Linq;
 public class TidyUpVoice : MonoBehaviour
 {
     GameObject game_object;
-    public TidyUp tidyUp;
+    TidyUp tidyUp;
+    SceneSwitch sceneSwitch;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
     // Start is called before the first frame update
     void Start()
     {
         game_object = GameObject.Find("Plane");
+        tidyUp = GameObject.FindObjectOfType(typeof(TidyUp)) as TidyUp;
+        sceneSwitch = GameObject.FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+
+        // go back to first scene:
+        keywords.Add("zurück", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene"); });
+
+        keywords.Add("Anfang", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene"); });
 
         //select Parent-GameObject:
         keywords.Add("Kugeln", () => {
@@ -36,7 +44,6 @@ public class TidyUpVoice : MonoBehaviour
         });
 
         //define location
-
         keywords.Add("auf blau", () => {
             tidyUp.PlaceInBlue(ChildrenToList(game_object));
         });

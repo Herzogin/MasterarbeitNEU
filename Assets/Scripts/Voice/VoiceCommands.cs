@@ -6,7 +6,8 @@ using System.Linq;
 public class VoiceCommands : MonoBehaviour
 {
     GameObject game_object;
-    public ObjectManipulation objectManipulation;
+    ObjectManipulation objectManipulation;
+    SceneSwitch sceneSwitch;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
@@ -14,6 +15,13 @@ public class VoiceCommands : MonoBehaviour
     void Start()
     {
         game_object = GameObject.Find("HelperObject");
+        objectManipulation = FindObjectOfType(typeof(ObjectManipulation)) as ObjectManipulation;
+        sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+
+        // go back to first scene:
+        keywords.Add("zurück", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene");});
+
+        keywords.Add("Anfang", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene");});
 
         keywords.Add("Kugel", () => {
             DeHighlightSelectedObject(game_object);
