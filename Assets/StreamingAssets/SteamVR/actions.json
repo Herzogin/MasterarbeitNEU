@@ -83,71 +83,55 @@
       "requirement": "optional"
     },
     {
-      "name": "/actions/ManipulationSet/in/vanish",
+      "name": "/actions/MasterarbeitSet/in/switch_scene",
       "type": "boolean"
     },
     {
-      "name": "/actions/ManipulationSet/in/change_size",
+      "name": "/actions/MasterarbeitSet/in/Interact_UI",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/vanish",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/change_position",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/change_size",
       "type": "vector2"
     },
     {
-      "name": "/actions/ManipulationSet/in/red",
+      "name": "/actions/MasterarbeitSet/in/speed_booster",
       "type": "boolean"
     },
     {
-      "name": "/actions/ManipulationSet/in/blue",
+      "name": "/actions/MasterarbeitSet/in/start_walking",
       "type": "boolean"
     },
     {
-      "name": "/actions/ManipulationSet/in/green",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/ManipulationSet/in/yellow",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/ManipulationSet/in/change_position",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/ManipulationSet/in/white",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/ManipulationSet/in/sceneSwitch",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/TidyUpSet/in/change_position",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/TidyUpSet/in/switchScene",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/NavigationSet/in/walkDirection",
+      "name": "/actions/MasterarbeitSet/in/walk_direction",
       "type": "vector2"
     },
     {
-      "name": "/actions/NavigationSet/in/startWalking",
+      "name": "/actions/MasterarbeitSet/in/red",
       "type": "boolean"
     },
     {
-      "name": "/actions/NavigationSet/in/speedBooster",
+      "name": "/actions/MasterarbeitSet/in/blue",
       "type": "boolean"
     },
     {
-      "name": "/actions/NavigationSet/in/switchScene",
+      "name": "/actions/MasterarbeitSet/in/yellow",
       "type": "boolean"
     },
     {
-      "name": "/actions/NavigationSet/in/InteractUI",
+      "name": "/actions/MasterarbeitSet/in/green",
       "type": "boolean"
     },
     {
-      "name": "/actions/SystemControlSet/in/backToFirstScene",
+      "name": "/actions/MasterarbeitSet/in/white",
       "type": "boolean"
     }
   ],
@@ -169,20 +153,8 @@
       "usage": "single"
     },
     {
-      "name": "/actions/ManipulationSet",
-      "usage": "single"
-    },
-    {
-      "name": "/actions/TidyUpSet",
-      "usage": "single"
-    },
-    {
-      "name": "/actions/NavigationSet",
-      "usage": "single"
-    },
-    {
-      "name": "/actions/SystemControlSet",
-      "usage": "single"
+      "name": "/actions/MasterarbeitSet",
+      "usage": "leftright"
     }
   ],
   "default_bindings": [

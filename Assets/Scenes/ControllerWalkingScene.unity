@@ -250,8 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pose: {fileID: 0}
   interactWithUI:
-    actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
+    actionPath: /actions/MasterarbeitSet/in/Interact_UI
+    needsReinit: 1
   active: 1
   color: {r: 0, g: 0, b: 0, a: 0}
   thickness: 0.002
@@ -280,8 +280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pose: {fileID: 0}
   interactWithUI:
-    actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
+    actionPath: /actions/MasterarbeitSet/in/Interact_UI
+    needsReinit: 1
   active: 1
   color: {r: 0, g: 0, b: 0, a: 0}
   thickness: 0.002
@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionSet:
-    actionSetPath: /actions/NavigationSet
+    actionSetPath: /actions/MasterarbeitSet
   forSources: 0
   disableAllOtherActionSets: 0
   activateOnStart: 1
@@ -591,13 +591,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementHand: 0
   TrackpadAction:
-    actionPath: /actions/NavigationSet/in/walkDirection
+    actionPath: /actions/MasterarbeitSet/in/walk_direction
     needsReinit: 0
   touch:
-    actionPath: /actions/NavigationSet/in/startWalking
+    actionPath: /actions/MasterarbeitSet/in/start_walking
     needsReinit: 0
   press:
-    actionPath: /actions/NavigationSet/in/speedBooster
+    actionPath: /actions/MasterarbeitSet/in/speed_booster
     needsReinit: 0
   MovementSpeed: 2
   Head: {fileID: 257357393}
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuButton:
-    actionPath: /actions/NavigationSet/in/switchScene
+    actionPath: /actions/MasterarbeitSet/in/switch_scene
     needsReinit: 0
 --- !u!1 &924316291
 GameObject:
