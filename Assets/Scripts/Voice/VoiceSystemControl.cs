@@ -1,99 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Valve.VR.Extras;
+using UnityEngine.Windows.Speech;
+using System.Linq;
 
-public class LaserpointerSystemControl : MonoBehaviour
+public class VoiceSystemControl : MonoBehaviour
 {
-    public SteamVR_LaserPointer laserPointer;
+
+    KeywordRecognizer keywordRecognizer;
+    Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
     SceneSwitch sceneSwitch;
     SkyboxController skyboxScript;
     GameObject[] buttons;
 
-    void Awake()
-    {
-        laserPointer.PointerClick += PointerClick;
-    }
 
-    private void Start()
+    void Start()
     {
         sceneSwitch = GameObject.FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
         skyboxScript = GameObject.FindObjectOfType(typeof(SkyboxController)) as SkyboxController;
-    } 
 
-    public void PointerClick(object sender, PointerEventArgs e)
-    {
-        Debug.Log("clicked");
+        
 
-        if (e.target.name == "getHelp")
+        keywords.Add("Hilfe an", () =>
         {
-            Debug.Log(e.target.name + " was clicked");
+            FindObjectOfType<AudioManager>().PlayAudio("HelpOnSound");
             GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = true;
-        }
-        else if (e.target.name == "getHelpOff")
+        });
+
+        keywords.Add("Hilfe aus", () =>
         {
-            Debug.Log(e.target.name + " was clicked");
+            FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
             GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = false;
-        }
-        else if (e.target.name == "MusicOn")
+        });
+
+        keywords.Add("Musik an", () => {FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");});
+
+        keywords.Add("Musik aus", () =>{FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");});
+
+        keywords.Add("Tag", () =>{skyboxScript.SkyToDay();});
+
+        keywords.Add("Nacht", () =>{skyboxScript.SkyToNight();});
+
+        keywords.Add("Start", () =>
         {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");
-        }
-        else if (e.target.name == "MusicOff")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
-        }
-        else if (e.target.name == "sunSwitch")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            skyboxScript.SkyToDay();
-        }
-        else if (e.target.name == "moonSwitch")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            skyboxScript.SkyToNight();
-        }
-        else if (e.target.name == "tidyUpVoiceButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
-            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceTidyUpScene");
-        }
-        else if(e.target.name == "tidyUpControllerButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
-            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerTidyUpScene");
-        }
-        else if (e.target.name == "walkingVoiceButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
-            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceWalkingScene");
-        }
-        else if (e.target.name == "walkingControllerButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
-            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerWalkingScene");
-        }
-        else if (e.target.name == "ManipulationVoiceButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
-            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSelectManipulationScene");
-        }
-        else if (e.target.name == "ManipulationControllerButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
-            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
-            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerSelectManipulationScene");
-        }
-        else if (e.target.name == "PlayButton")
-        {
-            Debug.Log(e.target.name + " was clicked");
             FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");
             skyboxScript.SkyToDay();
             //make floor big again:
@@ -116,10 +65,10 @@ public class LaserpointerSystemControl : MonoBehaviour
             {
                 button.GetComponent<MeshRenderer>().enabled = true;
             }
-        }
-        else if (e.target.name == "PauseButton")
+        });
+
+        keywords.Add("Pause", () => 
         {
-            Debug.Log(e.target.name + " was clicked");
             FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
             //pause penguins animation:
             GameObject.Find("PenguinSmall").GetComponent<Animation>().enabled = false;
@@ -130,10 +79,11 @@ public class LaserpointerSystemControl : MonoBehaviour
             {
                 rabbit.GetComponent<Animator>().enabled = false;
             }
-        }
-        else if (e.target.name == "StopButton")
+        });
+
+
+        keywords.Add("Stop", () =>
         {
-            Debug.Log(e.target.name + " was clicked");
             FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
             skyboxScript.SkyToNight();
             //make floor small:
@@ -150,29 +100,83 @@ public class LaserpointerSystemControl : MonoBehaviour
                 rabbit.GetComponent<Animator>().enabled = false;
                 rabbit.transform.GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
                 rabbit.transform.GetChild(2).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
-            }    
+            }
             //make 3D buttons invisible:
             buttons = GameObject.FindGameObjectsWithTag("3Dbuttons");
             foreach (GameObject button in buttons)
             {
                 button.GetComponent<MeshRenderer>().enabled = false;
             }
-        }
-        else
+        });
+
+        keywords.Add("Aufräumen Sprachbefehl", () =>
         {
-            Debug.Log(e.target.name + " was clicked, but we ignored it");
-        }
+            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
+            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceTidyUpScene");
+        });
+
+        keywords.Add("Aufräumen Controller", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
+            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerTidyUpScene");
+        });
+
+        keywords.Add("Gehen Sprachbefehl", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
+            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceWalkingScene");
+        });
+
+        keywords.Add("Gehen Controller", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
+            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerWalkingScene");
+        });
+
+        keywords.Add("Manipulation Sprachbefehl", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
+            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSelectManipulationScene");
+        });
+
+        keywords.Add("Manipulation Controller", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
+            sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerSelectManipulationScene");
+        });
 
 
-        List<GameObject> ChildrenToList(GameObject game_object)
+
+
+
+
+
+        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
+
+        keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
+
+        keywordRecognizer.Start();
+    }
+
+
+    private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
+    {
+        System.Action keywordAction;
+        print("you said: " + args.text);
+        if (keywords.TryGetValue(args.text, out keywordAction))
         {
-            int children = game_object.transform.childCount;
-            List<GameObject> ItemsInGroup = new List<GameObject>();
-            for (int i = 0; i < children; ++i)
-            {
-                ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-            }
-            return ItemsInGroup;
+            keywordAction.Invoke();
         }
+    }
+
+    List<GameObject> ChildrenToList(GameObject game_object)
+    {
+        int children = game_object.transform.childCount;
+        List<GameObject> ItemsInGroup = new List<GameObject>();
+        for (int i = 0; i < children; ++i)
+        {
+            ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
+        }
+        return ItemsInGroup;
     }
 }
