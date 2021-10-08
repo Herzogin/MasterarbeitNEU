@@ -10,6 +10,7 @@ public class VoiceSystemControl : MonoBehaviour
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
     SceneSwitch sceneSwitch;
+    SystemControlSucceded systemControlSucceded;
     SkyboxController skyboxScript;
     GameObject[] buttons;
 
@@ -18,31 +19,47 @@ public class VoiceSystemControl : MonoBehaviour
     {
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
         skyboxScript = FindObjectOfType(typeof(SkyboxController)) as SkyboxController;
+        systemControlSucceded = FindObjectOfType(typeof(SystemControlSucceded)) as SystemControlSucceded;
 
-        
+
 
         keywords.Add("Hilfe an", () =>
         {
+            systemControlSucceded.UsedHelpOn();
             FindObjectOfType<AudioManager>().PlayAudio("HelpOnSound");
             GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = true;
         });
 
         keywords.Add("Hilfe aus", () =>
         {
+            systemControlSucceded.UsedHelpOff();
             FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
             GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = false;
         });
 
-        keywords.Add("Musik an", () => {FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");});
+        keywords.Add("Musik an", () => {
+            systemControlSucceded.UsedMusicOn();
+            FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");
+        });
 
-        keywords.Add("Musik aus", () =>{FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");});
+        keywords.Add("Musik aus", () =>{
+            systemControlSucceded.UsedMusicOff();
+            FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
+        });
 
-        keywords.Add("Tag", () =>{skyboxScript.SkyToDay();});
+        keywords.Add("Tag", () =>{
+            systemControlSucceded.UsedDay();
+            skyboxScript.SkyToDay();
+        });
 
-        keywords.Add("Nacht", () =>{skyboxScript.SkyToNight();});
+        keywords.Add("Nacht", () =>{
+            systemControlSucceded.UsedNight();
+            skyboxScript.SkyToNight();
+        });
 
         keywords.Add("Start", () =>
         {
+            systemControlSucceded.UsedStart();
             FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");
             skyboxScript.SkyToDay();
             //make floor big again:
@@ -69,6 +86,7 @@ public class VoiceSystemControl : MonoBehaviour
 
         keywords.Add("Pause", () => 
         {
+            systemControlSucceded.UsedPause();
             FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
             //pause penguins animation:
             GameObject.Find("PenguinSmall").GetComponent<Animation>().enabled = false;
@@ -84,6 +102,7 @@ public class VoiceSystemControl : MonoBehaviour
 
         keywords.Add("Stop", () =>
         {
+            systemControlSucceded.UsedStop();
             FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
             skyboxScript.SkyToNight();
             //make floor small:

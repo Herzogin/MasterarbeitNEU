@@ -31,7 +31,6 @@ public class ManipulationSucceeded : MonoBehaviour
         if (taskCompleted & notWonAlready)
         {
             StartCoroutine(TaskCompleted());
-
             notWonAlready = false;
         }
     }
@@ -75,20 +74,5 @@ public class ManipulationSucceeded : MonoBehaviour
         print("deletedCount: " + deletedCount);
     }
 
-    //bool TwoObjectsSizeChanged()
-    //{
-    //    if (true
-    //        //CornerPosts.transform.GetChild(0).tag == "altered" &
-    //        //CornerPosts.transform.GetChild(1).tag == "altered" &
-    //        //CornerPosts.transform.GetChild(2).tag == "altered" &
-    //        //CornerPosts.transform.GetChild(3).tag == "altered"
-    //        )
-    //    {
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
+    
 }
