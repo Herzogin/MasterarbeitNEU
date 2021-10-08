@@ -8,6 +8,7 @@ TagManager:
   - animal
   - 3Dbuttons
   - altered
+  - collidable
   layers:
   - Default
   - TransparentFX

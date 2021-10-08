@@ -30,6 +30,36 @@ public class TidyUp : MonoBehaviour
         }         
     }
 
+    public bool IsInBlue(List<GameObject> list)//, GameObject selectedPlane)
+    {
+        bool itemInBlue = true;
+        for (int i = 0; i < list.Count; i++)
+        {
+            Vector3 itemPosition = list[i].transform.position;
+            if( itemPosition.x > 0 &
+                itemPosition.x < 10 &
+                itemPosition.z > 0 &
+                itemPosition.z < 10
+                )
+            {
+                //item in blue
+            }
+            else
+            {
+                itemInBlue = false;
+                return false;
+            }
+        }
+        if (itemInBlue)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void PlaceInRed(List<GameObject> list)//, GameObject selectedPlane)
     {
         for (int i = 0; i < list.Count; i++)
@@ -46,6 +76,36 @@ public class TidyUp : MonoBehaviour
             {
                 list[i].transform.position = new Vector3(-3, list[i].transform.localPosition.y, i + 1 - 6);
             }
+        }
+    }
+
+    public bool IsInRed(List<GameObject> list)//, GameObject selectedPlane)
+    {
+        bool itemInBlue = true;
+        for (int i = 0; i < list.Count; i++)
+        {
+            Vector3 itemPosition = list[i].transform.position;
+            if (itemPosition.x < 0 &
+                itemPosition.x > -10 &
+                itemPosition.z > 0 &
+                itemPosition.z < 10
+                )
+            {
+                //item in blue
+            }
+            else
+            {
+                itemInBlue = false;
+                return false;
+            }
+        }
+        if (itemInBlue)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -69,6 +129,36 @@ public class TidyUp : MonoBehaviour
         }
     }
 
+    public bool IsInGreen(List<GameObject> list)//, GameObject selectedPlane)
+    {
+        bool itemInBlue = true;
+        for (int i = 0; i < list.Count; i++)
+        {
+            Vector3 itemPosition = list[i].transform.position;
+            if (itemPosition.x > 0 &
+                itemPosition.x < 10 &
+                itemPosition.z < 0 &
+                itemPosition.z > -10
+                )
+            {
+                //item in blue
+            }
+            else
+            {
+                itemInBlue = false;
+                return false;
+            }
+        }
+        if (itemInBlue)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void PlaceInYellow(List<GameObject> list)//, GameObject selectedPlane)
     {
         for (int i = 0; i < list.Count; i++)
@@ -86,6 +176,36 @@ public class TidyUp : MonoBehaviour
                 list[i].transform.position = new Vector3(-3, list[i].transform.localPosition.y, -i - 1 + 6);
             }
 
+        }
+    }
+
+    public bool IsInYellow(List<GameObject> list)//, GameObject selectedPlane)
+    {
+        bool itemInBlue = true;
+        for (int i = 0; i < list.Count; i++)
+        {
+            Vector3 itemPosition = list[i].transform.position;
+            if (itemPosition.x < 0 &
+                itemPosition.x > -10 &
+                itemPosition.z < 0 &
+                itemPosition.z > -10
+                )
+            {
+                //item in blue
+            }
+            else
+            {
+                itemInBlue = false;
+                return false;
+            }
+        }
+        if (itemInBlue)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

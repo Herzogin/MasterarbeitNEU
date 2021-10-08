@@ -20,7 +20,8 @@ public class NavigationSucceded : MonoBehaviour
             taskCompleted = true;
             print("taskCompleted: " + taskCompleted);
         }
-        
+
+        //Quelle: https://forum.unity.com/threads/wait-for-second-without-startcouroutine.410320/
         if (taskCompleted & notWonalready)
         {
             StartCoroutine(TaskCompleted());

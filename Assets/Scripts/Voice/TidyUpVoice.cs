@@ -14,8 +14,8 @@ public class TidyUpVoice : MonoBehaviour
     void Start()
     {
         game_object = GameObject.Find("Plane");
-        tidyUp = GameObject.FindObjectOfType(typeof(TidyUp)) as TidyUp;
-        sceneSwitch = GameObject.FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+        tidyUp = FindObjectOfType(typeof(TidyUp)) as TidyUp;
+        sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
 
         // go back to first scene:
         keywords.Add("zurück", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene"); });
