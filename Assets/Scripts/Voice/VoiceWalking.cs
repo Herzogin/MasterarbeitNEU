@@ -20,6 +20,20 @@ public class VoiceWalking : MonoBehaviour
     {
         walk = CameraRig.GetComponent<Walk>();
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+
+        //show help for voice commands:
+        keywords.Add("Hilfe an", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("HelpOnSound");
+            GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = true;
+        });
+
+        keywords.Add("Hilfe aus", () =>
+        {
+            FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
+            GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = false;
+        });
+
         // go back to first scene:
         keywords.Add("zurück", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene"); });
 
