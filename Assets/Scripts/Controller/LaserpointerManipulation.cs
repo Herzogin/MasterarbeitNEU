@@ -11,6 +11,9 @@ public class LaserpointerManipulation : MonoBehaviour
 {
     GameObject selectedGameObject;
     GameObject defaultObject;
+    bool readyToChangeSize = false;
+    ManipulationSucceeded manipulationSucceded;
+
 
     [Header("Right Controller")]
     public SteamVR_LaserPointer rightLaserPointer;
@@ -18,9 +21,11 @@ public class LaserpointerManipulation : MonoBehaviour
     public GameObject rightController;
 
     [Header("Actions Right Controller")]
+    public SteamVR_Action_Boolean start_change_size = null;
+    public SteamVR_Action_Boolean stop_change_size;
     public SteamVR_Action_Vector2 sizeAction;
     public SteamVR_Action_Boolean positionAction;
- 
+
     [Header("Left Controller")]
     public SteamVR_LaserPointer leftLaserPointer;
     public SteamVR_Input_Sources leftHand;
@@ -47,6 +52,7 @@ public class LaserpointerManipulation : MonoBehaviour
     void Start()
     {
         defaultObject = GameObject.Find("HelperObject");
+        manipulationSucceded = FindObjectOfType(typeof(ManipulationSucceeded)) as ManipulationSucceeded;
         selectedGameObject = defaultObject;
 
         positionAction.AddOnStateDownListener(TriggerDown, rightHand);
@@ -59,34 +65,82 @@ public class LaserpointerManipulation : MonoBehaviour
         white.AddOnStateDownListener(DPadCenter, leftHand);
 
         vanish.AddOnStateDownListener(TriggerPressed, leftHand);
+
+        manipulationSucceded.IncreaseRotatedCount();
+        manipulationSucceded.IncreaseRotatedCount();
     }
 
     // Update is called once per frame
     void Update()
     {
-        manipulation.ChangeSize(sizeAction, rightHand, selectedGameObject);
+        if (start_change_size.GetLastStateDown(SteamVR_Input_Sources.Any))
+        {
+            readyToChangeSize = true;
+            manipulationSucceded.IncreaseChangedSizeCount();
+        }
+
+        if (stop_change_size.GetLastStateUp(SteamVR_Input_Sources.Any))
+        {
+            readyToChangeSize = false;
+        }
+
+        if (readyToChangeSize)
+        {
+            manipulation.ChangeSize(sizeAction, rightHand, selectedGameObject);
+            
+        }
+
+        
     }
 
     // TRIGGER RIGHT HAND
     public void TriggerDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.AttachObject(selectedGameObject, rightController);
 
-    public void TriggerUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.DetachObject(selectedGameObject);
+    public void TriggerUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        manipulation.DetachObject(selectedGameObject);
+        manipulationSucceded.IncreaseChangedPositionCount();
+    }
 
 
-    //TRIGGER LEFT
-    public void TriggerPressed(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.DeleteObject(selectedGameObject);
+    //TRIGGER LEFT.....delete object
+    public void TriggerPressed(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        manipulation.DeleteObject(selectedGameObject);
+        manipulationSucceded.IncreaseDeletedCount();
+    }
 
 
-    // TRACKPAD LEFT NORTH SOUTH WEST EAST 
-    public void DPadNorth(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.PaintObject(selectedGameObject, Color.red);
+    // TRACKPAD LEFT NORTH SOUTH WEST EAST.....change objects color
+    public void DPadNorth(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        manipulation.PaintObject(selectedGameObject, Color.red);
+        manipulationSucceded.IncreaseChangedColorCount();
+    }
+
+    public void DPadEast(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    { 
+        manipulation.PaintObject(selectedGameObject, Color.blue);
+        manipulationSucceded.IncreaseChangedColorCount();
+    }
     
-    public void DPadEast(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.PaintObject(selectedGameObject, Color.blue);
-    
-    public void DPadWest(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.PaintObject(selectedGameObject, Color.yellow);
+    public void DPadWest(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        manipulation.PaintObject(selectedGameObject, Color.yellow);
+        manipulationSucceded.IncreaseChangedColorCount();
+    }
 
-    public void DPadSouth(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.PaintObject(selectedGameObject, Color.green);
+    public void DPadSouth(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        manipulation.PaintObject(selectedGameObject, Color.green);
+        manipulationSucceded.IncreaseChangedColorCount();
+    }
     
-    public void DPadCenter(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.PaintObject(selectedGameObject, Color.white);
+    public void DPadCenter(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    { 
+        manipulation.PaintObject(selectedGameObject, Color.white);
+        manipulationSucceded.IncreaseChangedColorCount();
+    }
 
 
 

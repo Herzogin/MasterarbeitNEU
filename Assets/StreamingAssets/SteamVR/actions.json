@@ -133,6 +133,14 @@
     {
       "name": "/actions/MasterarbeitSet/in/white",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/start_change_size",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/stop_change_size",
+      "type": "boolean"
     }
   ],
   "action_sets": [

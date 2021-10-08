@@ -8,6 +8,7 @@ public class VoiceCommands : MonoBehaviour
     GameObject game_object;
     ObjectManipulation objectManipulation;
     SceneSwitch sceneSwitch;
+    ManipulationSucceeded manipulationSucceded;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
@@ -17,6 +18,7 @@ public class VoiceCommands : MonoBehaviour
         game_object = GameObject.Find("HelperObject");
         objectManipulation = FindObjectOfType(typeof(ObjectManipulation)) as ObjectManipulation;
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
+        manipulationSucceded = FindObjectOfType(typeof(ManipulationSucceeded)) as ManipulationSucceeded;
 
         // go back to first scene:
         keywords.Add("zurück", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene");});
@@ -48,37 +50,79 @@ public class VoiceCommands : MonoBehaviour
         });
 
         //change color of GameObject:
-        keywords.Add("rot", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.red); }));
+        keywords.Add("rot", (System.Action)(() => {
+            objectManipulation.PaintObject((GameObject)game_object, (Color)Color.red);
+            manipulationSucceded.IncreaseChangedColorCount();
+        }));
 
-        keywords.Add("gelb", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.yellow); }));
+        keywords.Add("gelb", (System.Action)(() => {
+            objectManipulation.PaintObject((GameObject)game_object, (Color)Color.yellow);
+            manipulationSucceded.IncreaseChangedColorCount();
+        }));
 
-        keywords.Add("blau", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.blue); }));
+        keywords.Add("blau", (System.Action)(() => {
+            objectManipulation.PaintObject((GameObject)game_object, (Color)Color.blue);
+            manipulationSucceded.IncreaseChangedColorCount();
+        }));
 
-        keywords.Add("grün", (System.Action)(() => { objectManipulation.PaintObject((GameObject)game_object, (Color)Color.green); }));
+        keywords.Add("grün", (System.Action)(() => {
+            objectManipulation.PaintObject((GameObject)game_object, (Color)Color.green);
+            manipulationSucceded.IncreaseChangedColorCount();
+        }));
 
         //change size of GameObject:
-        keywords.Add("größer", () => { objectManipulation.bigger(game_object); });
+        keywords.Add("größer", () => {
+            objectManipulation.bigger(game_object);
+            manipulationSucceded.IncreaseChangedSizeCount();
+        });
 
-        keywords.Add("kleiner", () => { objectManipulation.smaller(game_object); });
+        keywords.Add("kleiner", () => {
+            objectManipulation.smaller(game_object);
+            manipulationSucceded.IncreaseChangedSizeCount();
+        });
 
         //rotate GameObject:
-        keywords.Add("drehen", () => { objectManipulation.rotateRight(game_object); }); //, 20f); });
+        keywords.Add("drehen", () => {
+            objectManipulation.rotateRight(game_object);
+            manipulationSucceded.IncreaseRotatedCount();
+        });
 
         //delete GameObject:
-        keywords.Add("löschen", () => { objectManipulation.DeleteObject(game_object); });
+        keywords.Add("löschen", () => {
+            objectManipulation.DeleteObject(game_object);
+            manipulationSucceded.IncreaseDeletedCount();
+        });
 
         //move GameObject:
-        keywords.Add("rechts", () => { objectManipulation.moveRight(game_object); });
+        keywords.Add("rechts", () => {
+            objectManipulation.moveRight(game_object);
+            manipulationSucceded.IncreaseChangedPositionCount();
+        });
 
-        keywords.Add("links", () => { objectManipulation.moveLeft(game_object); });
+        keywords.Add("links", () => {
+            objectManipulation.moveLeft(game_object);
+            manipulationSucceded.IncreaseChangedPositionCount();
+        });
 
-        keywords.Add("nach vorne", () => { objectManipulation.moveForward(game_object); });
+        keywords.Add("nach vorne", () => {
+            objectManipulation.moveForward(game_object);
+            manipulationSucceded.IncreaseChangedPositionCount();
+        });
 
-        keywords.Add("nach hinten", () => { objectManipulation.moveBack(game_object); });
+        keywords.Add("nach hinten", () => {
+            objectManipulation.moveBack(game_object);
+            manipulationSucceded.IncreaseChangedPositionCount();
+        });
 
-        keywords.Add("hoch", () => { objectManipulation.moveUp(game_object); });
+        keywords.Add("hoch", () => {
+            objectManipulation.moveUp(game_object);
+            manipulationSucceded.IncreaseChangedPositionCount();
+        });
 
-        keywords.Add("runter", () => { objectManipulation.moveDown(game_object); });
+        keywords.Add("runter", () => {
+            objectManipulation.moveDown(game_object);
+            manipulationSucceded.IncreaseChangedPositionCount();
+        });
 
         //start listener:
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());

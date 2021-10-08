@@ -116,6 +116,10 @@ public class ObjectManipulation : MonoBehaviour
     public void DeleteObject(GameObject gameObject)
     {
         gameObject.GetComponent<MeshRenderer>().enabled = !gameObject.GetComponent<MeshRenderer>().enabled;
+        if (gameObject.transform.childCount > 0)
+        {
+            gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
         //gameObject.SetActive(false);
     }
 

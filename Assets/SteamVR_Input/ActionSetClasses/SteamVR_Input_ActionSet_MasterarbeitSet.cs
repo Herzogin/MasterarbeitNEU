@@ -120,5 +120,21 @@ namespace Valve.VR
                 return SteamVR_Actions.masterarbeitSet_white;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean start_change_size
+        {
+            get
+            {
+                return SteamVR_Actions.masterarbeitSet_start_change_size;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean stop_change_size
+        {
+            get
+            {
+                return SteamVR_Actions.masterarbeitSet_stop_change_size;
+            }
+        }
     }
 }
