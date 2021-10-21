@@ -136,5 +136,13 @@ namespace Valve.VR
                 return SteamVR_Actions.masterarbeitSet_stop_change_size;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean select_object
+        {
+            get
+            {
+                return SteamVR_Actions.masterarbeitSet_select_object;
+            }
+        }
     }
 }

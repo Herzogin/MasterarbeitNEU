@@ -141,6 +141,10 @@
     {
       "name": "/actions/MasterarbeitSet/in/stop_change_size",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/select_object",
+      "type": "boolean"
     }
   ],
   "action_sets": [

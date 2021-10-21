@@ -4,57 +4,96 @@ using Valve.VR.Extras;
 using UnityEngine.Windows.Speech;
 using System.Linq;
 using UnityEngine.UI;
+using Valve.VR;
+using System;
 
 public class VoiceAndLaserpointer : MonoBehaviour
 {
-    public ObjectManipulation objectManipulation;
-    public Text voiceInput;
-    public SteamVR_LaserPointer laserPointer;
+    ObjectManipulation objectManipulation;
+    //public Text voiceInput;
+    public SteamVR_LaserPointer rightLaserPointer;
+    public SteamVR_LaserPointer leftLaserPointer;
+    public SteamVR_Action_Boolean select_object = null;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
+    GameObject helperObject;
+    GameObject pointerInsideObject;
     GameObject targetGameObject;
+    bool gripPressed = false;
 
     void Awake()
     {
 
-        laserPointer.PointerIn += PointerInside;
-        laserPointer.PointerOut += PointerOutside;
-        laserPointer.PointerClick += PointerClick;
+        leftLaserPointer.PointerIn += LeftPointerInside;
+        leftLaserPointer.PointerOut += LeftPointerOutside;
+        leftLaserPointer.PointerClick += LeftPointerClick;
+
+        rightLaserPointer.PointerIn += RightPointerInside;
+        rightLaserPointer.PointerOut += RightPointerOutside;
+        rightLaserPointer.PointerClick += RightPointerClick;
     }
 
+    
 
-    // Start is called before the first frame update
-    void Start()
+    public void Update()
     {
-        targetGameObject = null;
-        keywords.Add("blue", (System.Action)(() =>
+        if (select_object.GetLastStateDown(SteamVR_Input_Sources.Any))
+        {
+            gripPressed = true;
+            print("Grip pressed " + gripPressed);
+        }
+        else if (select_object.GetLastStateUp(SteamVR_Input_Sources.Any))
+        {
+            gripPressed = false;
+            print("Grip pressed " + gripPressed);
+        }
+
+
+
+
+        if (gripPressed)
+        {
+            targetGameObject = pointerInsideObject;
+        }
+        else
+        {
+            targetGameObject = helperObject;
+        }
+    }
+
+        // Start is called before the first frame update
+        void Start()
+    {
+        helperObject = GameObject.Find("HelperObject");
+        objectManipulation = FindObjectOfType(typeof(ObjectManipulation)) as ObjectManipulation;
+        keywords.Add("blau", (() =>
         {
             Debug.Log("blue");
-            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.blue);
+            objectManipulation.PaintObject(targetGameObject, Color.blue);
         }));
 
-        keywords.Add("green", (System.Action)(() =>
+        keywords.Add("grün", (() =>
         {
             Debug.Log("green");
-            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.green);
+            objectManipulation.PaintObject(targetGameObject, Color.green);
         }));
 
-        keywords.Add("yellow", (System.Action)(() =>
+        keywords.Add("gelb", (() =>
         {
             Debug.Log("yellow");
-            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.yellow);
+            objectManipulation.PaintObject(targetGameObject, Color.yellow);
         }));
 
-        keywords.Add("red", (System.Action)(() =>
+        keywords.Add("rot", (() =>
         {
             Debug.Log("red");
-            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.red);
+            objectManipulation.PaintObject(targetGameObject, Color.red);
         }));
 
-        keywords.Add("magenta", (System.Action)(() =>
+        keywords.Add("pink", (() =>
         {
             Debug.Log("magenta");
-            objectManipulation.PaintObject((GameObject)targetGameObject, (Color)Color.magenta);
+            objectManipulation.PaintObject(targetGameObject, Color.magenta);
         }));
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
@@ -64,30 +103,51 @@ public class VoiceAndLaserpointer : MonoBehaviour
         keywordRecognizer.Start();
     }
 
-    public void PointerClick(object sender, PointerEventArgs e)
+    private void LeftPointerClick(object sender, PointerEventArgs e)
     {
-        targetGameObject = e.target.gameObject;
+        //targetGameObject = e.target.gameObject;
     }
 
-    public void PointerInside(object sender, PointerEventArgs e)
+
+
+    private void LeftPointerInside(object sender, PointerEventArgs e)
     {
         string name = e.target.name;
         Debug.Log(name + " was entered");
-        targetGameObject = e.target.gameObject;
+        pointerInsideObject = e.target.gameObject;
+        
     }
 
-    public void PointerOutside(object sender, PointerEventArgs e)
+    private void LeftPointerOutside(object sender, PointerEventArgs e)
     {
-        targetGameObject = null;
+        pointerInsideObject = helperObject;
     }
 
+    private void RightPointerClick(object sender, PointerEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+    private void RightPointerOutside(object sender, PointerEventArgs e)
+     {
+        pointerInsideObject = helperObject;
+    }
+
+        private void RightPointerInside(object sender, PointerEventArgs e)
+        {
+        string name = e.target.name;
+        Debug.Log(name + " was entered");
+        pointerInsideObject = e.target.gameObject;
+    }
     private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        voiceInput.text = args.text;
+        //voiceInput.text = args.text;
         System.Action keywordAction;
         if (keywords.TryGetValue(args.text, out keywordAction))
         {
             keywordAction.Invoke();
         }
     }
+
+    
 }

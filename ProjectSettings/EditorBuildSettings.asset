@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SystemControlScene.unity
-    guid: 5dd6cc8e3a829784c8fd0d8cc75da198
-  - enabled: 1
     path: Assets/Scenes/ControllerTidyUpScene.unity
     guid: f561041ba764a5d4a911dd2540f9bd6c
   - enabled: 1
@@ -26,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VoiceSelectManipulationScene.unity
     guid: a2a1b7a9e64994340994e440f5702c54
+  - enabled: 1
+    path: Assets/Scenes/VoiceSystemControlScene.unity
+    guid: 41bb59edccb75934ead20a22e6f37b56
   m_configObjects: {}

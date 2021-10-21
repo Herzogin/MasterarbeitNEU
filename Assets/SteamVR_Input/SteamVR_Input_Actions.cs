@@ -85,6 +85,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_masterarbeitSet_stop_change_size;
         
+        private static SteamVR_Action_Boolean p_masterarbeitSet_select_object;
+        
         public static SteamVR_Action_Boolean default_InteractUI
         {
             get
@@ -357,6 +359,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean masterarbeitSet_select_object
+        {
+            get
+            {
+                return SteamVR_Actions.p_masterarbeitSet_select_object.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
@@ -393,7 +403,8 @@ namespace Valve.VR
                     SteamVR_Actions.masterarbeitSet_green,
                     SteamVR_Actions.masterarbeitSet_white,
                     SteamVR_Actions.masterarbeitSet_start_change_size,
-                    SteamVR_Actions.masterarbeitSet_stop_change_size};
+                    SteamVR_Actions.masterarbeitSet_stop_change_size,
+                    SteamVR_Actions.masterarbeitSet_select_object};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -427,7 +438,8 @@ namespace Valve.VR
                     SteamVR_Actions.masterarbeitSet_green,
                     SteamVR_Actions.masterarbeitSet_white,
                     SteamVR_Actions.masterarbeitSet_start_change_size,
-                    SteamVR_Actions.masterarbeitSet_stop_change_size};
+                    SteamVR_Actions.masterarbeitSet_stop_change_size,
+                    SteamVR_Actions.masterarbeitSet_select_object};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
@@ -458,7 +470,8 @@ namespace Valve.VR
                     SteamVR_Actions.masterarbeitSet_green,
                     SteamVR_Actions.masterarbeitSet_white,
                     SteamVR_Actions.masterarbeitSet_start_change_size,
-                    SteamVR_Actions.masterarbeitSet_stop_change_size};
+                    SteamVR_Actions.masterarbeitSet_stop_change_size,
+                    SteamVR_Actions.masterarbeitSet_select_object};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle};
@@ -500,7 +513,8 @@ namespace Valve.VR
                     SteamVR_Actions.masterarbeitSet_green,
                     SteamVR_Actions.masterarbeitSet_white,
                     SteamVR_Actions.masterarbeitSet_start_change_size,
-                    SteamVR_Actions.masterarbeitSet_stop_change_size};
+                    SteamVR_Actions.masterarbeitSet_stop_change_size,
+                    SteamVR_Actions.masterarbeitSet_select_object};
         }
         
         private static void PreInitActions()
@@ -539,6 +553,7 @@ namespace Valve.VR
             SteamVR_Actions.p_masterarbeitSet_white = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/MasterarbeitSet/in/white")));
             SteamVR_Actions.p_masterarbeitSet_start_change_size = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/MasterarbeitSet/in/start_change_size")));
             SteamVR_Actions.p_masterarbeitSet_stop_change_size = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/MasterarbeitSet/in/stop_change_size")));
+            SteamVR_Actions.p_masterarbeitSet_select_object = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/MasterarbeitSet/in/select_object")));
         }
     }
 }

@@ -34,9 +34,9 @@ public class VoiceCommands : MonoBehaviour
         });
 
         // go back to first scene:
-        keywords.Add("zurück", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene");});
+        keywords.Add("zurück", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene");});
 
-        keywords.Add("Anfang", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("SystemControlScene");});
+        keywords.Add("Anfang", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene");});
 
         keywords.Add("Kugel", () => {
             DeHighlightSelectedObject(game_object);
