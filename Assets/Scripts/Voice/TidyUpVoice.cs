@@ -21,6 +21,7 @@ public class TidyUpVoice : MonoBehaviour
         keywords.Add("Hilfe an", () =>
         {
             FindObjectOfType<AudioManager>().PlayAudio("HelpOnSound");
+            GameObject.Find("InfoCanvasVoice").GetComponent<Canvas>().enabled = false;
             GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = true;
         });
 

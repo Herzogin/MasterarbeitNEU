@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 using System.Linq;
+using UnityEngine.UI;
 
 public class VoiceSystemControl : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class VoiceSystemControl : MonoBehaviour
     SystemControlSucceded systemControlSucceded;
     SkyboxController skyboxScript;
     GameObject[] buttons;
+    GameObject MainCanvas;
 
 
     void Start()
@@ -20,21 +22,22 @@ public class VoiceSystemControl : MonoBehaviour
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
         skyboxScript = FindObjectOfType(typeof(SkyboxController)) as SkyboxController;
         systemControlSucceded = FindObjectOfType(typeof(SystemControlSucceded)) as SystemControlSucceded;
-
+        MainCanvas = GameObject.Find("MainCanvas");
 
 
         keywords.Add("Hilfe an", () =>
         {
             systemControlSucceded.UsedHelpOn();
             FindObjectOfType<AudioManager>().PlayAudio("HelpOnSound");
-            GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = true;
+            GameObject.Find("InfoCanvasVoice").GetComponent<Canvas>().enabled = false;
+            MainCanvas.GetComponent<Canvas>().enabled = true;
         });
 
         keywords.Add("Hilfe aus", () =>
         {
             systemControlSucceded.UsedHelpOff();
             FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
-            GameObject.Find("MainCanvas").GetComponent<Canvas>().enabled = false;
+            MainCanvas.GetComponent<Canvas>().enabled = false;
         });
 
         keywords.Add("Musik an", () => {
@@ -50,11 +53,13 @@ public class VoiceSystemControl : MonoBehaviour
         keywords.Add("Tag", () =>{
             systemControlSucceded.UsedDay();
             skyboxScript.SkyToDay();
+            UItextColor(MainCanvas, Color.black);
         });
 
         keywords.Add("Nacht", () =>{
             systemControlSucceded.UsedNight();
             skyboxScript.SkyToNight();
+            UItextColor(MainCanvas, Color.white);
         });
 
         keywords.Add("Start", () =>
@@ -185,6 +190,15 @@ public class VoiceSystemControl : MonoBehaviour
         if (keywords.TryGetValue(args.text, out keywordAction))
         {
             keywordAction.Invoke();
+        }
+    }
+
+    public void UItextColor(GameObject Canvas, Color color)
+    {
+        foreach (GameObject CanvasChild in ChildrenToList(Canvas))
+        {
+            CanvasChild.transform.GetChild(0).gameObject.transform.GetComponent<Text>().color = color;
+            CanvasChild.transform.GetChild(1).gameObject.transform.GetComponent<Text>().color = color;
         }
     }
 

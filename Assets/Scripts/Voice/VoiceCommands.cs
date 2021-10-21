@@ -24,6 +24,7 @@ public class VoiceCommands : MonoBehaviour
         keywords.Add("Hilfe an", () =>
         {
             FindObjectOfType<AudioManager>().PlayAudio("HelpOnSound");
+            GameObject.Find("InfoCanvasVoice").GetComponent<Canvas>().enabled = false;
             GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = true;
         });
 
@@ -38,6 +39,7 @@ public class VoiceCommands : MonoBehaviour
 
         keywords.Add("Anfang", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene");});
 
+        //select GameObject:
         keywords.Add("Kugel", () => {
             DeHighlightSelectedObject(game_object);
             game_object = GameObject.Find("Sphere");
@@ -59,6 +61,12 @@ public class VoiceCommands : MonoBehaviour
         keywords.Add("Zylinder", () => {
             DeHighlightSelectedObject(game_object);
             game_object = GameObject.Find("Cylinder");
+            HighlightSelectedObject(game_object);
+        });
+
+        keywords.Add("keins", () => {
+            DeHighlightSelectedObject(game_object);
+            game_object = GameObject.Find("HelperObject");
             HighlightSelectedObject(game_object);
         });
 
