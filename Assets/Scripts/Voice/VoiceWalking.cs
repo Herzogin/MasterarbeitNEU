@@ -41,7 +41,7 @@ public class VoiceWalking : MonoBehaviour
 
 
         keywords.Add("los", () => {
-            walk.SetMovementSpeed(2);
+            walk.SetMovementSpeed(4);
         });
 
         keywords.Add("stop", () => {
@@ -52,7 +52,7 @@ public class VoiceWalking : MonoBehaviour
             float lastSpeed = walk.GetMovementSpeed();
             if (lastSpeed < 15)
             {
-                walk.SetMovementSpeed(lastSpeed + 3);
+                walk.SetMovementSpeed(lastSpeed * 2);
             }
         });
 
@@ -60,7 +60,7 @@ public class VoiceWalking : MonoBehaviour
             float lastSpeed = walk.GetMovementSpeed();
             if (lastSpeed > 3)
             {
-                walk.SetMovementSpeed(lastSpeed - 3);
+                walk.SetMovementSpeed(lastSpeed / 2);
             }
 
         });

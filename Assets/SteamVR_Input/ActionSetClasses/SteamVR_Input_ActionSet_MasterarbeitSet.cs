@@ -144,5 +144,21 @@ namespace Valve.VR
                 return SteamVR_Actions.masterarbeitSet_select_object;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean multiple_object_mode
+        {
+            get
+            {
+                return SteamVR_Actions.masterarbeitSet_multiple_object_mode;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean force_drop
+        {
+            get
+            {
+                return SteamVR_Actions.masterarbeitSet_force_drop;
+            }
+        }
     }
 }

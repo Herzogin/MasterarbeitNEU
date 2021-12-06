@@ -62,7 +62,10 @@ public class VoiceSystemControl : MonoBehaviour
             UItextColor(MainCanvas, Color.white);
         });
 
-        keywords.Add("Start", () =>
+        keywords.Add("Start", () =>{ GameStart(); });
+        keywords.Add("Play", () => { GameStart(); });
+
+        void GameStart()
         {
             systemControlSucceded.UsedStart();
             FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");
@@ -87,7 +90,7 @@ public class VoiceSystemControl : MonoBehaviour
             {
                 button.GetComponent<MeshRenderer>().enabled = true;
             }
-        });
+        }
 
         keywords.Add("Pause", () => 
         {
@@ -105,7 +108,10 @@ public class VoiceSystemControl : MonoBehaviour
         });
 
 
-        keywords.Add("Stop", () =>
+        keywords.Add("Stop", () =>{ GameStop(); });
+        keywords.Add("Halt", () => { GameStop(); });
+
+        void GameStop()
         {
             systemControlSucceded.UsedStop();
             FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
@@ -131,7 +137,7 @@ public class VoiceSystemControl : MonoBehaviour
             {
                 button.GetComponent<MeshRenderer>().enabled = false;
             }
-        });
+        }
 
         keywords.Add("Aufräumen Sprachbefehl", () =>
         {

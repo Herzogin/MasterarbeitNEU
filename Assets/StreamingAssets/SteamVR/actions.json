@@ -145,6 +145,14 @@
     {
       "name": "/actions/MasterarbeitSet/in/select_object",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/multiple_object_mode",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/MasterarbeitSet/in/force_drop",
+      "type": "boolean"
     }
   ],
   "action_sets": [

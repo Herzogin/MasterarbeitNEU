@@ -13,7 +13,7 @@ public class TidyUpVoice : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        game_object = GameObject.Find("Plane");
+        game_object = GameObject.Find("HelperObject");
         tidyUp = FindObjectOfType(typeof(TidyUp)) as TidyUp;
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
 
@@ -55,6 +55,10 @@ public class TidyUpVoice : MonoBehaviour
         keywords.Add("Zylinder", () => {
             game_object = GameObject.Find("Cylinder");
             LiftUp(ChildrenToList(game_object));
+        });
+
+        keywords.Add("keins", () => {
+            game_object = GameObject.Find("HelperObject");
         });
 
         //define location
