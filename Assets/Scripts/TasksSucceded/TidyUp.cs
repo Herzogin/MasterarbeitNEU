@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+//Script places all objects of a group in the appropriate quadrant and checks whether all objects in the quadrant belong there.
 public class TidyUp : MonoBehaviour
 {
     private PlaneRange BluePlane = new PlaneRange(0, 10, 0, 10);

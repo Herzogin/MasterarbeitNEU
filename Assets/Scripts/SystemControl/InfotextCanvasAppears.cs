@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+//Script shows a note at the beginning of the scene and automatically hides it after 10 seconds. 
 public class InfotextCanvasAppears : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(InfotextAppears());

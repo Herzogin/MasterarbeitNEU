@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Windows.Speech;
 using System.Linq;
 
+//Script starts listener, defines keywords and which action they should trigger for selection and manipulation scene.
+//Inspired by: https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/voice-input-in-unity
 public class VoiceCommands : MonoBehaviour
 {
     GameObject game_object;
@@ -19,7 +21,7 @@ public class VoiceCommands : MonoBehaviour
         objectManipulation = FindObjectOfType(typeof(ObjectManipulation)) as ObjectManipulation;
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
         manipulationSucceded = FindObjectOfType(typeof(ManipulationSucceeded)) as ManipulationSucceeded;
-
+        //__________________________________________________
         //show help for voice commands:
         keywords.Add("Hilfe an", () =>
         {
@@ -33,12 +35,12 @@ public class VoiceCommands : MonoBehaviour
             FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
             GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = false;
         });
-
+        //__________________________________________________
         // go back to first scene:
         keywords.Add("zurück", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene");});
 
         keywords.Add("Anfang", () =>{sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene");});
-
+        //__________________________________________________
         //select GameObject:
         keywords.Add("Kugel", () => {
             DeHighlightSelectedObject(game_object);
@@ -69,7 +71,7 @@ public class VoiceCommands : MonoBehaviour
             game_object = GameObject.Find("HelperObject");
             HighlightSelectedObject(game_object);
         });
-
+        //__________________________________________________
         //change color of GameObject:
         keywords.Add("rot", (System.Action)(() => {
             objectManipulation.PaintObject((GameObject)game_object, (Color)Color.red);
@@ -90,7 +92,7 @@ public class VoiceCommands : MonoBehaviour
             objectManipulation.PaintObject((GameObject)game_object, (Color)Color.green);
             manipulationSucceded.IncreaseChangedColorCount();
         }));
-
+        //__________________________________________________
         //change size of GameObject:
         keywords.Add("größer", () => {
             objectManipulation.bigger(game_object);
@@ -101,19 +103,19 @@ public class VoiceCommands : MonoBehaviour
             objectManipulation.smaller(game_object);
             manipulationSucceded.IncreaseChangedSizeCount();
         });
-
+        //__________________________________________________
         //rotate GameObject:
         keywords.Add("drehen", () => {
             objectManipulation.rotateRight(game_object);
             manipulationSucceded.IncreaseRotatedCount();
         });
-
+        //__________________________________________________
         //delete GameObject:
         keywords.Add("löschen", () => {
             objectManipulation.DeleteObject(game_object);
             manipulationSucceded.IncreaseDeletedCount();
         });
-
+        //__________________________________________________
         //move GameObject:
         keywords.Add("rechts", () => {
             objectManipulation.moveRight(game_object);
@@ -145,6 +147,7 @@ public class VoiceCommands : MonoBehaviour
             manipulationSucceded.IncreaseChangedPositionCount();
         });
 
+        //__________________________________________________
         //start listener:
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
 

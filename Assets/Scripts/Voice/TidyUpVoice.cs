@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.Windows.Speech;
 using System.Linq;
 
+//Script starts listener, defines keywords and which action they should trigger for the tidy up scene.
+//Inspired by: https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/voice-input-in-unity
 public class TidyUpVoice : MonoBehaviour
 {
     GameObject game_object;
@@ -10,13 +12,13 @@ public class TidyUpVoice : MonoBehaviour
     SceneSwitch sceneSwitch;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
-    // Start is called before the first frame update
+
     void Start()
     {
         game_object = GameObject.Find("HelperObject");
         tidyUp = FindObjectOfType(typeof(TidyUp)) as TidyUp;
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
-
+        //__________________________________________________
         //show help for voice commands:
         keywords.Add("Hilfe an", () =>
         {
@@ -24,61 +26,60 @@ public class TidyUpVoice : MonoBehaviour
             GameObject.Find("InfoCanvasVoice").GetComponent<Canvas>().enabled = false;
             GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = true;
         });
-
         keywords.Add("Hilfe aus", () =>
         {
             FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
             GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = false;
         });
-
+        //__________________________________________________
         // go back to first scene:
         keywords.Add("zurück", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene"); });
 
         keywords.Add("Anfang", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene"); });
-
+        //__________________________________________________
         //select Parent-GameObject:
         keywords.Add("Kugeln", () => {
             game_object = GameObject.Find("Spheres");
-            LiftUp(ChildrenToList(game_object));
+            LiftUp(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("Würfel", () => {
             game_object = GameObject.Find("Cubes");
-            LiftUp(ChildrenToList(game_object));
+            LiftUp(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("Kapseln", () => {
             game_object = GameObject.Find("Capsules");
-            LiftUp(ChildrenToList(game_object));
+            LiftUp(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("Zylinder", () => {
             game_object = GameObject.Find("Cylinder");
-            LiftUp(ChildrenToList(game_object));
+            LiftUp(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("keins", () => {
             game_object = GameObject.Find("HelperObject");
         });
-
-        //define location
+        //__________________________________________________
+        //define location:
         keywords.Add("auf blau", () => {
-            tidyUp.PlaceInBlue(ChildrenToList(game_object));
+            tidyUp.PlaceInBlue(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("auf rot", () => {
             
-            tidyUp.PlaceInRed(ChildrenToList(game_object));
+            tidyUp.PlaceInRed(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("auf gelb", () => {
-            tidyUp.PlaceInYellow(ChildrenToList(game_object));
+            tidyUp.PlaceInYellow(Utils.ChildrenToList(game_object));
         });
 
         keywords.Add("auf grün", () => {
-            tidyUp.PlaceInGreen(ChildrenToList(game_object));
+            tidyUp.PlaceInGreen(Utils.ChildrenToList(game_object));
         });
-
+        //__________________________________________________
 
         //start listener:
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
@@ -98,17 +99,7 @@ public class TidyUpVoice : MonoBehaviour
         }
     }
 
-    List<GameObject> ChildrenToList(GameObject selectedGroup)
-    {
-        int children = game_object.transform.childCount;
-        List<GameObject> ItemsInGroup = new List<GameObject>();
-        for (int i = 0; i < children; ++i)
-        {
-            ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-        }
-        return ItemsInGroup;
-    }
-
+    //lifts all objects in a group when the group is selected:
     void LiftUp(List<GameObject> itemList)
     {
         for (int i = 0; i < itemList.Count; i++)

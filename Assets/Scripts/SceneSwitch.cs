@@ -14,7 +14,7 @@ public class SceneSwitch : MonoBehaviour
         }
         if (currentSceneName == sceneName)
         {
-            Debug.Log("already your current scene");
+            print("already your current scene");
         }
     }
 }

@@ -1,43 +1,21 @@
-﻿using Valve.VR.Extras;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 
 public class ObjectManipulation : MonoBehaviour
 {
-
+    //---------CHANGE OBJECTS COLOR----------------------------
     public void PaintObject(GameObject gameObject, Color color)
     {
         gameObject.GetComponent<Renderer>().material.color = color;
     }
+    //_________________________________________________________
 
-    //public void colorVoice(GameObject gameObject, Color color)
-    //{
-    //    if (gameObject.name == "snowman")
-    //    {
-    //        gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = color;
-    //        gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = color;
-    //        gameObject.transform.GetChild(2).gameObject.GetComponent<Renderer>().material.color = color;
-    //    }
-    //    else
-    //    {
-    //        gameObject.GetComponent<Renderer>().material.color = color;
-    //    }
-    //}
 
-    //public void bigger(PointerEventArgs e)
-    //{
-    //    Debug.Log("größer");
-    //    Vector3 currentScale = e.target.transform.localScale;
-    //    if (currentScale.x < 5)
-    //    {
-    //        e.target.transform.localScale = currentScale * 1.5f;
-    //    }
-    //}
-
+    //---------CHANGE OBJECTS SIZE------------------------
+    //Voice only:
     public void bigger(GameObject gameObject)
     {
-        Debug.Log("bigger");
+        print("bigger");
         Vector3 currentScale = gameObject.transform.localScale;
         if (currentScale.x < 5)
         {
@@ -45,9 +23,10 @@ public class ObjectManipulation : MonoBehaviour
         }
     }
 
+    //Voice only:
     public void smaller(GameObject gameObject)
     {
-        Debug.Log("smaller");
+        print("smaller");
         Vector3 currentScale = gameObject.transform.localScale;
         if (currentScale.x > 0.2)
         {
@@ -55,6 +34,7 @@ public class ObjectManipulation : MonoBehaviour
         }
     }
 
+    //Controller only:
     public void ChangeSize(SteamVR_Action_Vector2 touchPadAction, SteamVR_Input_Sources hand, GameObject selectedGameObject)
     {
         Vector2 touchPadValue = touchPadAction.GetAxis(hand);
@@ -63,66 +43,51 @@ public class ObjectManipulation : MonoBehaviour
             selectedGameObject.transform.localScale = new Vector3(touchPadValue.x + 1, touchPadValue.x + 1, touchPadValue.x + 1);
         }
     }
+    //_________________________________________________________
 
+
+    //---------CHANGE OBJECTS POSITION---------------------
+    //Voice only:
     public void moveRight(GameObject gameObject)
     {
         gameObject.transform.position += Vector3.right;
     }
 
+    //Voice only:
     public void moveLeft(GameObject gameObject)
     {
         gameObject.transform.position += Vector3.left;
     }
 
+    //Voice only:
     public void moveForward(GameObject gameObject)
     {
         gameObject.transform.position += Vector3.back;
     }
 
+    //Voice only:
     public void moveBack(GameObject gameObject)
     {
         gameObject.transform.position += Vector3.forward;
     }
 
+    //Voice only:
     public void moveUp(GameObject gameObject)
     {
         if (gameObject.transform.position.y < 10)
             gameObject.transform.position += Vector3.up;
     }
 
+    //Voice only:
     public void moveDown(GameObject gameObject)
     {
         if (gameObject.transform.position.y >= 1)
         {
             gameObject.transform.position += Vector3.down;
         }
-        //else
-        //{
-        //    gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z);
-        //}
-
     }
 
-
-
-  
-
-    public void rotateRight(GameObject gameObject) //, float speed)
-    {
-        //gameObject.transform.Rotate(Time.deltaTime * speed * Vector3.down);
-        gameObject.transform.Rotate(Vector3.down * 30);
-    }
-
-    public void DeleteObject(GameObject gameObject)
-    {
-        gameObject.GetComponent<MeshRenderer>().enabled = !gameObject.GetComponent<MeshRenderer>().enabled;
-        if (gameObject.transform.childCount > 0)
-        {
-            gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
-        }
-        //gameObject.SetActive(false);
-    }
-
+    //Controller only:
     public void AttachObject(GameObject gameObject, GameObject Controller)
     {
         if (gameObject.GetComponent<Rigidbody>() != null)
@@ -132,6 +97,7 @@ public class ObjectManipulation : MonoBehaviour
         gameObject.transform.parent = Controller.transform;
     }
 
+    //Controller only:
     public void DetachObject(GameObject gameObject)
     {
         gameObject.transform.SetParent(null);
@@ -140,31 +106,26 @@ public class ObjectManipulation : MonoBehaviour
             gameObject.GetComponent<Rigidbody>().useGravity = true; //https://answers.unity.com/questions/767287/chow-to-disable-gravity-from-script.html
         }
     }
+    //_________________________________________________________
 
 
-    //public IEnumerator vanish(PointerEventArgs e)
-    //{
-    //    Vector3 newVector = new Vector3(0.01f, 0.01f, 0.01f);
-    //    float xsize = e.target.localScale.x;
-    //    while (xsize > 0.02f)
-    //    {
-    //        xsize = e.target.localScale.x;
-    //        e.target.localScale = e.target.localScale - newVector;
-    //        yield return new WaitForSeconds(0.0001f);
-    //    }
-    //    Destroy(e.target.gameObject);
-    //}
+    //---------CHANGE OBJECTS ROTATION---------------------
+    //Voice only:
+    public void rotateRight(GameObject gameObject)
+    {
+        gameObject.transform.Rotate(Vector3.down * 30);
+    }
+    //_________________________________________________________
 
-    //public IEnumerator vanish(GameObject gameObject)
-    //{
-    //    Vector3 newVector = new Vector3(0.01f, 0.01f, 0.01f);
-    //    float xsize = gameObject.transform.localScale.x;
-    //    while (xsize > 0.02f)
-    //    {
-    //        xsize = gameObject.transform.localScale.x;
-    //        gameObject.transform.localScale = gameObject.transform.localScale - newVector;
-    //        yield return new WaitForSeconds(0.0001f);
-    //    }
-    //    Destroy(gameObject.transform.gameObject);
-    //}
+
+    //---------DELETE OBJECT----------------------------
+    public void DeleteObject(GameObject gameObject)
+    {
+        gameObject.GetComponent<MeshRenderer>().enabled = !gameObject.GetComponent<MeshRenderer>().enabled;
+        if (gameObject.transform.childCount > 0)
+        {
+            gameObject.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+    //_________________________________________________________
 }

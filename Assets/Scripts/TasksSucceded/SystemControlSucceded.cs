@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Script checks whether the player has solved all tasks in system control scene
 public class SystemControlSucceded : MonoBehaviour
 {
     bool start, stop, pause, day, night, musicOn, musicOff, helpOn, helpOff = false;

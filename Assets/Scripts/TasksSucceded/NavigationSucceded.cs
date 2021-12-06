@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+//Script checks whether the player has solved all tasks in navigation scene
 public class NavigationSucceded : MonoBehaviour
 {
     GameObject CornerPosts;

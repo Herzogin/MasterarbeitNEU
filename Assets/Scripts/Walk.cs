@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using Valve.VR;
 
+
+// The script constantly moves the player in the direction in which he turns his head.
 // inspired from: https://wirewhiz.com/how-to-implement-walking-and-jumping-in-unity-steamvr/
-
 public class Walk : MonoBehaviour
 {
     private Vector2 trackpad;
@@ -23,7 +23,6 @@ public class Walk : MonoBehaviour
     void Update()
     {
         updateCollider();
-        
         moveDirection = Head.transform.localRotation * Vector3.forward;
         Vector3 velocity = new Vector3(0, 0, 0);
         velocity = moveDirection;

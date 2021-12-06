@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 using System.Linq;
 
+//Script starts listener, defines keywords and which action they should trigger for navigation scene.
+//Inspired by: https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/voice-input-in-unity
 public class VoiceWalking : MonoBehaviour
 {
     GameObject game_object;
@@ -14,13 +15,12 @@ public class VoiceWalking : MonoBehaviour
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
     
-
-    // Start is called before the first frame update
     void Start()
     {
         walk = CameraRig.GetComponent<Walk>();
         sceneSwitch = FindObjectOfType(typeof(SceneSwitch)) as SceneSwitch;
 
+        //__________________________________________________
         //show help for voice commands:
         keywords.Add("Hilfe an", () =>
         {
@@ -33,13 +33,13 @@ public class VoiceWalking : MonoBehaviour
             FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
             GameObject.Find("VoicecommandCanvas").GetComponent<Canvas>().enabled = false;
         });
-
+        //__________________________________________________
         // go back to first scene:
         keywords.Add("zurück", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene"); });
 
         keywords.Add("Anfang", () => { sceneSwitch.GetComponent<SceneSwitch>().switchToScene("VoiceSystemControlScene"); });
-
-
+        //__________________________________________________
+        //start and stop walking
         keywords.Add("los", () => {
             walk.SetMovementSpeed(4);
         });
@@ -47,7 +47,8 @@ public class VoiceWalking : MonoBehaviour
         keywords.Add("stop", () => {
             walk.SetMovementSpeed(0);
         });
-
+        //__________________________________________________
+        //increase or decrease walking speed
         keywords.Add("schneller", () => {
             float lastSpeed = walk.GetMovementSpeed();
             if (lastSpeed < 15)
@@ -65,7 +66,7 @@ public class VoiceWalking : MonoBehaviour
 
         });
 
-
+        //__________________________________________________
         //start listener:
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
 

@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Utils 
 {
+    //Returns a list of all Child-GameObjects from a given Gameobject.
     public static List<GameObject> ChildrenToList(GameObject game_object)
     {
         int children = game_object.transform.childCount;

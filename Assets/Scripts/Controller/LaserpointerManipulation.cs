@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 using Valve.VR.Extras;
 
-//Quelle: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
-
-
+//Script to change color, size, rotation, position of an object and delete it.
+//Inspired by: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
 public class LaserpointerManipulation : MonoBehaviour
 {
     GameObject selectedGameObject;
@@ -70,9 +67,9 @@ public class LaserpointerManipulation : MonoBehaviour
         manipulationSucceded.IncreaseRotatedCount();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // TRACKPAD RIGHT.....change size:
         if (start_change_size.GetLastStateDown(SteamVR_Input_Sources.Any))
         {
             readyToChangeSize = true;
@@ -89,11 +86,9 @@ public class LaserpointerManipulation : MonoBehaviour
             manipulation.ChangeSize(sizeAction, rightHand, selectedGameObject);
             
         }
-
-        
     }
 
-    // TRIGGER RIGHT HAND
+    // TRIGGER RIGHT HAND..... move object:
     public void TriggerDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource) => manipulation.AttachObject(selectedGameObject, rightController);
 
     public void TriggerUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -103,7 +98,7 @@ public class LaserpointerManipulation : MonoBehaviour
     }
 
 
-    //TRIGGER LEFT.....delete object
+    //TRIGGER LEFT.....delete object:
     public void TriggerPressed(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         manipulation.DeleteObject(selectedGameObject);
@@ -111,7 +106,7 @@ public class LaserpointerManipulation : MonoBehaviour
     }
 
 
-    // TRACKPAD LEFT NORTH SOUTH WEST EAST.....change objects color
+    // TRACKPAD LEFT (NORTH, SOUTH, WEST, EAST).....change objects color:
     public void DPadNorth(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
     {
         manipulation.PaintObject(selectedGameObject, Color.red);
@@ -144,19 +139,19 @@ public class LaserpointerManipulation : MonoBehaviour
 
 
 
-
+    //select an object by laserpointer:
     public void PointerInside(object sender, PointerEventArgs e)
     {
         string name = e.target.name;
-        Debug.Log(name + " was entered for size change");
+        print(name + " was entered for size change");
         if (e.target.tag == "manipulable")
         {
-            Debug.Log(name + " has tag `manipulable` for size change");
+            print(name + " has tag `manipulable` for size change");
             selectedGameObject = e.target.gameObject;
         }
         else
         {
-            Debug.Log(name + " was clicked, but has no tag `manipulable`");
+            print(name + " was clicked, but has no tag `manipulable`");
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Script checks whether the player has solved all tasks in manipulation scene
 public class ManipulationSucceeded : MonoBehaviour
 {
     int changedSizeCount = 0;
@@ -11,7 +11,6 @@ public class ManipulationSucceeded : MonoBehaviour
     int deletedCount = 0;
     bool taskCompleted = false;
     bool notWonAlready = true;
-
 
 
     public void Update()
@@ -27,7 +26,7 @@ public class ManipulationSucceeded : MonoBehaviour
             print("taskCompleted: " + taskCompleted);
         }
 
-        //Quelle: https://forum.unity.com/threads/wait-for-second-without-startcouroutine.410320/
+        //Source: https://forum.unity.com/threads/wait-for-second-without-startcouroutine.410320/
         if (taskCompleted & notWonAlready)
         {
             StartCoroutine(TaskCompleted());
@@ -42,7 +41,6 @@ public class ManipulationSucceeded : MonoBehaviour
         FindObjectOfType<AudioManager>().PlayAudio("WinningSound");
 
     }
-
 
     public void IncreaseChangedSizeCount()
     {
@@ -73,6 +71,4 @@ public class ManipulationSucceeded : MonoBehaviour
         deletedCount += 1;
         print("deletedCount: " + deletedCount);
     }
-
-    
 }

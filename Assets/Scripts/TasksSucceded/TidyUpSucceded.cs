@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Script checks whether the player has solved all tasks in tidy up scene
 public class TidyUpSucceded : MonoBehaviour
 {
     GameObject CubesGameObject;
@@ -53,10 +54,6 @@ public class TidyUpSucceded : MonoBehaviour
             notWonalready = false;
         }
     }
-
-    
-
-    
 
     private IEnumerator TaskCompleted()
     {

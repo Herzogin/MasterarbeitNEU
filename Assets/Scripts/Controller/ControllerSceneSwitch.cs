@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 
+//Script enables player come back to the System Control Scene by pushing controllers menu-button.
 public class ControllerSceneSwitch : MonoBehaviour
 {
     public SteamVR_Action_Boolean MenuButton = null;
     SceneSwitch sceneSwitch;
-
 
     void Start()
     {

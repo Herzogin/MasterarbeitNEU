@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 using System.Linq;
 using UnityEngine.UI;
 
+//Script starts listener, defines keywords and which action they should trigger for system control scene.
+//Inspired by: https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/voice-input-in-unity
 public class VoiceSystemControl : MonoBehaviour
 {
 
@@ -24,7 +25,8 @@ public class VoiceSystemControl : MonoBehaviour
         systemControlSucceded = FindObjectOfType(typeof(SystemControlSucceded)) as SystemControlSucceded;
         MainCanvas = GameObject.Find("MainCanvas");
 
-
+        //__________________________________________________
+        //show help for voice commands:
         keywords.Add("Hilfe an", () =>
         {
             systemControlSucceded.UsedHelpOn();
@@ -39,7 +41,7 @@ public class VoiceSystemControl : MonoBehaviour
             FindObjectOfType<AudioManager>().PlayAudio("HelpOffSound");
             MainCanvas.GetComponent<Canvas>().enabled = false;
         });
-
+        //change status music:
         keywords.Add("Musik an", () => {
             systemControlSucceded.UsedMusicOn();
             FindObjectOfType<AudioManager>().UnPauseAudio("BackgroundSound");
@@ -49,7 +51,8 @@ public class VoiceSystemControl : MonoBehaviour
             systemControlSucceded.UsedMusicOff();
             FindObjectOfType<AudioManager>().PauseAudio("BackgroundSound");
         });
-
+        //_______________________________________________
+        //change time of day:
         keywords.Add("Tag", () =>{
             systemControlSucceded.UsedDay();
             skyboxScript.SkyToDay();
@@ -61,7 +64,8 @@ public class VoiceSystemControl : MonoBehaviour
             skyboxScript.SkyToNight();
             UItextColor(MainCanvas, Color.white);
         });
-
+        //_______________________________________________
+        //change game status:
         keywords.Add("Start", () =>{ GameStart(); });
         keywords.Add("Play", () => { GameStart(); });
 
@@ -78,17 +82,11 @@ public class VoiceSystemControl : MonoBehaviour
             GameObject.Find("PenguinBig").transform.GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = true;
             //make rabbits visible and start animation again:
             GameObject Rabbits = GameObject.Find("Rabbits");
-            foreach (GameObject rabbit in ChildrenToList(Rabbits))
+            foreach (GameObject rabbit in Utils.ChildrenToList(Rabbits))
             {
                 rabbit.transform.GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = true;
                 rabbit.transform.GetChild(2).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = true;
                 rabbit.GetComponent<Animator>().enabled = true;
-            }
-            //make 3D buttons visible again:
-            buttons = GameObject.FindGameObjectsWithTag("3Dbuttons");
-            foreach (GameObject button in buttons)
-            {
-                button.GetComponent<MeshRenderer>().enabled = true;
             }
         }
 
@@ -101,7 +99,7 @@ public class VoiceSystemControl : MonoBehaviour
             GameObject.Find("PenguinBig").GetComponent<Animation>().enabled = false;
             //pause rabbits animation:
             GameObject Rabbits = GameObject.Find("Rabbits");
-            foreach (GameObject rabbit in ChildrenToList(Rabbits))
+            foreach (GameObject rabbit in Utils.ChildrenToList(Rabbits))
             {
                 rabbit.GetComponent<Animator>().enabled = false;
             }
@@ -125,20 +123,16 @@ public class VoiceSystemControl : MonoBehaviour
             GameObject.Find("PenguinBig").transform.GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
             //make rabbits invisible and pause animation:
             GameObject Rabbits = GameObject.Find("Rabbits");
-            foreach (GameObject rabbit in ChildrenToList(Rabbits))
+            foreach (GameObject rabbit in Utils.ChildrenToList(Rabbits))
             {
                 rabbit.GetComponent<Animator>().enabled = false;
                 rabbit.transform.GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
                 rabbit.transform.GetChild(2).gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
             }
-            //make 3D buttons invisible:
-            buttons = GameObject.FindGameObjectsWithTag("3Dbuttons");
-            foreach (GameObject button in buttons)
-            {
-                button.GetComponent<MeshRenderer>().enabled = false;
-            }
         }
 
+        //_______________________________________________
+        //change scenes:
         keywords.Add("Aufräumen Sprachbefehl", () =>
         {
             FindObjectOfType<AudioManager>().PlayAudio("SceneSwitchSound");
@@ -175,12 +169,8 @@ public class VoiceSystemControl : MonoBehaviour
             sceneSwitch.GetComponent<SceneSwitch>().switchToScene("ControllerSelectManipulationScene");
         });
 
-
-
-
-
-
-
+        //__________________________________________________
+        //start listener:
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
 
         keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
@@ -201,21 +191,10 @@ public class VoiceSystemControl : MonoBehaviour
 
     public void UItextColor(GameObject Canvas, Color color)
     {
-        foreach (GameObject CanvasChild in ChildrenToList(Canvas))
+        foreach (GameObject CanvasChild in Utils.ChildrenToList(Canvas))
         {
             CanvasChild.transform.GetChild(0).gameObject.transform.GetComponent<Text>().color = color;
             CanvasChild.transform.GetChild(1).gameObject.transform.GetComponent<Text>().color = color;
         }
-    }
-
-    List<GameObject> ChildrenToList(GameObject game_object)
-    {
-        int children = game_object.transform.childCount;
-        List<GameObject> ItemsInGroup = new List<GameObject>();
-        for (int i = 0; i < children; ++i)
-        {
-            ItemsInGroup.Add(game_object.transform.GetChild(i).gameObject);
-        }
-        return ItemsInGroup;
     }
 }

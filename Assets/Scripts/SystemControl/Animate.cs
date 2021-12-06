@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//Script defines, which specific animation of an animated object is active.
 public class Animate : MonoBehaviour
 {
     public int AnimIndex = 0;

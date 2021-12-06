@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 using Valve.VR.Extras;
 
-//Quelle: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
-
-
+//Script for moving an object with controllers laserpointer.
+//Inspired by: https://setzeus.medium.com/tutorial-steamvr-2-0-laser-pointer-bbc816ebeec5
 public class Laserpointer_Position_Action : MonoBehaviour
 {
     GameObject selectedGameObject;
@@ -23,7 +20,6 @@ public class Laserpointer_Position_Action : MonoBehaviour
         laserPointer.PointerOut += PointerOutside;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         HelperObject = GameObject.Find("HelperObject");
@@ -31,33 +27,7 @@ public class Laserpointer_Position_Action : MonoBehaviour
         positionAction.AddOnStateUpListener(TriggerUp, hand);
     }
 
-    public void TriggerDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
-    {
-        Debug.Log("Trigger down");
-        attachedGameObject = selectedGameObject;
-        print(attachedGameObject.name + " is new attachedGameObject");
-        if (attachedGameObject.GetComponent<Rigidbody>() != null)
-        {
-            attachedGameObject.GetComponent<Rigidbody>().useGravity = false; //https://answers.unity.com/questions/767287/chow-to-disable-gravity-from-script.html
-        }
-
-        attachedGameObject.transform.parent = Controller.transform;
-    }
-
-    public void TriggerUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
-    {
-        Debug.Log("Trigger up");
-        print(attachedGameObject.name + " ist noch attachedGameObject");
-        attachedGameObject.transform.SetParent(null);
-        if (attachedGameObject.GetComponent<Rigidbody>() != null)
-        {
-            attachedGameObject.GetComponent<Rigidbody>().useGravity = true; //https://answers.unity.com/questions/767287/chow-to-disable-gravity-from-script.html
-        }
-        attachedGameObject = null;
-    }
-
-    
-
+    //selecting object with tag "manipulable" with controllers laserpointer
     public void PointerInside(object sender, PointerEventArgs e)
     {        
         if (e.target.tag == "manipulable")
@@ -72,5 +42,32 @@ public class Laserpointer_Position_Action : MonoBehaviour
         {
             selectedGameObject = HelperObject;
         }
+    }
+
+    //When controllers trigger is pressed, object is attached to laserpointer and can be positioned
+    public void TriggerDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        print("Trigger down");
+        attachedGameObject = selectedGameObject;
+        print(attachedGameObject.name + " is new attachedGameObject");
+        if (attachedGameObject.GetComponent<Rigidbody>() != null)
+        {
+            attachedGameObject.GetComponent<Rigidbody>().useGravity = false; 
+        }
+
+        attachedGameObject.transform.parent = Controller.transform;
+    }
+
+    //When trigger is released, object detaches from laserpointer.
+    public void TriggerUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        print("Trigger up");
+        print(attachedGameObject.name + " is still attachedGameObject");
+        attachedGameObject.transform.SetParent(null);
+        if (attachedGameObject.GetComponent<Rigidbody>() != null)
+        {
+            attachedGameObject.GetComponent<Rigidbody>().useGravity = true; 
+        }
+        attachedGameObject = null;
     }
 }

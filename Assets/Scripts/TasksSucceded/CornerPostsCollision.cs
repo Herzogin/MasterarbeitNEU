@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//Script checks whether the player has hit the corner post
 public class CornerPostsCollision : MonoBehaviour
 {
     void OnCollisionEnter(Collision collision)
@@ -14,8 +13,7 @@ public class CornerPostsCollision : MonoBehaviour
                 FindObjectOfType<AudioManager>().PlayAudio("SuccessSound");
                 GetComponent<Renderer>().material.color = Color.black;
                 transform.tag = "altered";
-            }
-            
+            } 
         }
     }
 }
